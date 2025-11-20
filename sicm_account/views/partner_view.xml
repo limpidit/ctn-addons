@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_property_form_sicm_account" model="ir.ui.view">
+        <field name="name">view.partner.property.form.account</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.view_partner_property_form"/> 
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='days_sales_outstanding']" position="after">
+                <field name="insured_amount"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
