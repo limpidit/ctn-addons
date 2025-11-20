@@ -1,0 +1,37 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sicm_account
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e-20251021\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-20 11:00+0000\n"
+"PO-Revision-Date: 2025-11-20 11:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sicm_account
+#: model:ir.model,name:sicm_account.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: sicm_account
+#: model:ir.model.fields,field_description:sicm_account.field_res_partner__display_name
+msgid "Display Name"
+msgstr "Nom d'affichage"
+
+#. module: sicm_account
+#: model:ir.model.fields,field_description:sicm_account.field_res_partner__id
+msgid "ID"
+msgstr ""
+
+#. module: sicm_account
+#: model:ir.model.fields,field_description:sicm_account.field_res_partner__insured_amount
+#: model:ir.model.fields,field_description:sicm_account.field_res_users__insured_amount
+msgid "Insured Amount"
+msgstr "Montant assuré"
