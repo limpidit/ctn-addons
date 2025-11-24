@@ -1,0 +1,16 @@
+{
+    'name': 'SICM Sale',
+    'version': '1.0',
+    'description': 'SICM Sale',
+    'author': 'Limpid IT',
+    'license': 'LGPL-3',
+    'depends': [
+        'sale'
+    ],
+    'data': [
+        'views/res_partner_views.xml',
+        'views/sale_order_views.xml'
+    ],
+    'auto_install': False,
+    'application': False
+}

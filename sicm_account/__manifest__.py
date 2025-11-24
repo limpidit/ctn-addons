@@ -5,8 +5,7 @@
     'author': 'Limpid IT',
     'license': 'LGPL-3',
     'depends': [
-        'account',
-        'contacts'
+        'account'
     ],
     'data': [
         'views/partner_view.xml'
