@@ -5,4 +5,4 @@ from odoo import models, fields
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    category_id = fields.Many2many(required=True)
+    order_reference_required = fields.Boolean(string="Order Reference Required")
