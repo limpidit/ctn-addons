@@ -5,7 +5,9 @@
     'author': 'Limpid IT',
     'license': 'LGPL-3',
     'depends': [
-        'sale'
+        'sale',
+        'sale_stock',
+        'account'
     ],
     'data': [
         'views/res_partner_views.xml',
