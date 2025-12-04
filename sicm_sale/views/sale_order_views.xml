@@ -14,4 +14,17 @@
         </field>
     </record>
 
+    <record id="view_order_form_inherit_sale_stock_sicm" model="ir.ui.view">
+        <field name="name">sale.order.form.sicm.sale.stock</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='warehouse_id']" position="replace"/>
+            
+            <group name="order_details" position="inside">
+                <field name="warehouse_id" options="{'no_create': True}" force_save="1" readonly="state == 'sale'"/>
+            </group>
+        </field>
+    </record>
+
 </odoo>
