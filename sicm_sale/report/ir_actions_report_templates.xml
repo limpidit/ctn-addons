@@ -12,8 +12,20 @@
                         Invoicing Address
                     </t>
                 </strong>
-                <div t-field="doc.partner_invoice_id"
-                    t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                <div class="mb-0">
+                    <div t-field="doc.partner_invoice_id.name"/>
+                    <div t-if="doc.partner_invoice_id.street" t-field="doc.partner_invoice_id.street"/>
+                    <div t-if="doc.partner_invoice_id.street2" t-field="doc.partner_invoice_id.street2"/>
+                    <div>
+                        <span t-if="doc.partner_invoice_id.zip" t-field="doc.partner_invoice_id.zip"/>
+                        <span t-if="doc.partner_invoice_id.city" t-field="doc.partner_invoice_id.city"/>
+                    </div>
+                    <div t-if="doc.partner_invoice_id.state_id" t-field="doc.partner_invoice_id.state_id.name"/>
+                    <div t-if="doc.partner_invoice_id.country_id" t-field="doc.partner_invoice_id.country_id.name"/>
+                    <div t-if="doc.partner_invoice_id.phone">
+                        <i class="fa fa-phone"/> <span t-field="doc.partner_invoice_id.phone"/>
+                    </div>
+                </div>
                 <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
                     <strong class="d-block mt-3">Shipping Address</strong>
                     <div class="mb-0">

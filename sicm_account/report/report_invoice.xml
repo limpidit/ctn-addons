@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_invoice_document_inherit_shipping" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@name='shipping_address_block']//div[@t-field='o.partner_shipping_id']" position="replace">
+            <div class="mb-0">
+                <div t-field="o.partner_shipping_id.name"/>
+                <div t-if="o.partner_shipping_id.street" t-field="o.partner_shipping_id.street"/>
+                <div t-if="o.partner_shipping_id.street2" t-field="o.partner_shipping_id.street2"/>
+                <div>
+                    <span t-if="o.partner_shipping_id.zip" t-field="o.partner_shipping_id.zip"/>
+                    <span t-if="o.partner_shipping_id.city" t-field="o.partner_shipping_id.city"/>
+                </div>
+                <div t-if="o.partner_shipping_id.state_id" t-field="o.partner_shipping_id.state_id.name"/>
+                <div t-if="o.partner_shipping_id.country_id" t-field="o.partner_shipping_id.country_id.name"/>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@name='address_not_same_as_shipping']//address[@t-field='o.partner_id']" position="replace">
+            <address class="mb-0">
+                <div t-field="o.partner_id.name"/>
+                <div t-if="o.partner_id.street" t-field="o.partner_id.street"/>
+                <div t-if="o.partner_id.street2" t-field="o.partner_id.street2"/>
+                <div>
+                    <span t-if="o.partner_id.zip" t-field="o.partner_id.zip"/>
+                    <span t-if="o.partner_id.city" t-field="o.partner_id.city"/>
+                </div>
+                <div t-if="o.partner_id.state_id" t-field="o.partner_id.state_id.name"/>
+                <div t-if="o.partner_id.country_id" t-field="o.partner_id.country_id.name"/>
+            </address>
+        </xpath>
+
+        <xpath expr="//div[@name='address_same_as_shipping']//address[@t-field='o.partner_id']" position="replace">
+            <address class="mb-0">
+                <div t-field="o.partner_id.name"/>
+                <div t-if="o.partner_id.street" t-field="o.partner_id.street"/>
+                <div t-if="o.partner_id.street2" t-field="o.partner_id.street2"/>
+                <div>
+                    <span t-if="o.partner_id.zip" t-field="o.partner_id.zip"/>
+                    <span t-if="o.partner_id.city" t-field="o.partner_id.city"/>
+                </div>
+                <div t-if="o.partner_id.state_id" t-field="o.partner_id.state_id.name"/>
+                <div t-if="o.partner_id.country_id" t-field="o.partner_id.country_id.name"/>
+            </address>
+        </xpath>
+
+        <xpath expr="//div[@name='no_shipping']//address[@t-field='o.partner_id']" position="replace">
+            <address class="mb-0">
+                <div t-field="o.partner_id.name"/>
+                <div t-if="o.partner_id.street" t-field="o.partner_id.street"/>
+                <div t-if="o.partner_id.street2" t-field="o.partner_id.street2"/>
+                <div>
+                    <span t-if="o.partner_id.zip" t-field="o.partner_id.zip"/>
+                    <span t-if="o.partner_id.city" t-field="o.partner_id.city"/>
+                </div>
+                <div t-if="o.partner_id.state_id" t-field="o.partner_id.state_id.name"/>
+                <div t-if="o.partner_id.country_id" t-field="o.partner_id.country_id.name"/>
+            </address>
+        </xpath>
+    </template>
+
+</odoo>
