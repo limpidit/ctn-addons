@@ -8,7 +8,8 @@
         'account'
     ],
     'data': [
-        'views/partner_view.xml'
+        'views/partner_view.xml',
+        'report/report_invoice.xml',
     ],
     'auto_install': False,
     'application': False,
