@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="sale_order_portal_content_inherit_address" inherit_id="sale.sale_order_portal_content">
+        <xpath expr="//span[@id='shipping_address']//div[@t-field='sale_order.partner_shipping_id']" position="replace">
+            <div class="mb-0">
+                <div t-field="sale_order.partner_shipping_id.name"/>
+                <div t-if="sale_order.partner_shipping_id.street" t-field="sale_order.partner_shipping_id.street"/>
+                <div t-if="sale_order.partner_shipping_id.street2" t-field="sale_order.partner_shipping_id.street2"/>
+                <div>
+                    <span t-if="sale_order.partner_shipping_id.zip" t-field="sale_order.partner_shipping_id.zip"/>
+                    <span t-if="sale_order.partner_shipping_id.city" t-field="sale_order.partner_shipping_id.city"/>
+                </div>
+                <div t-if="sale_order.partner_shipping_id.state_id" t-field="sale_order.partner_shipping_id.state_id.name"/>
+                <div t-if="sale_order.partner_shipping_id.country_id" t-field="sale_order.partner_shipping_id.country_id.name"/>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>
