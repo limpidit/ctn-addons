@@ -11,7 +11,9 @@
     ],
     'data': [
         'views/res_partner_views.xml',
-        'views/sale_order_views.xml'
+        'views/sale_order_views.xml',
+        'report/ir_actions_report_templates.xml',
+        'views/sale_portal_templates.xml'
     ],
     'auto_install': False,
     'application': False

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_document_inherit_shipping" inherit_id="sale.report_saleorder_document">
+
+        <xpath expr="//t[@t-set='information_block']" position="replace">
+            <t t-set="information_block">
+                <strong>
+                    <t t-if="doc.partner_shipping_id == doc.partner_invoice_id">
+                        Invoicing and Shipping Address
+                    </t>
+                    <t t-else="">
+                        Invoicing Address
+                    </t>
+                </strong>
+                <div class="mb-0">
+                    <div t-field="doc.partner_invoice_id.name"/>
+                    <div t-if="doc.partner_invoice_id.street" t-field="doc.partner_invoice_id.street"/>
+                    <div t-if="doc.partner_invoice_id.street2" t-field="doc.partner_invoice_id.street2"/>
+                    <div>
+                        <span t-if="doc.partner_invoice_id.zip" t-field="doc.partner_invoice_id.zip"/>
+                        <span t-if="doc.partner_invoice_id.city" t-field="doc.partner_invoice_id.city"/>
+                    </div>
+                    <div t-if="doc.partner_invoice_id.state_id" t-field="doc.partner_invoice_id.state_id.name"/>
+                    <div t-if="doc.partner_invoice_id.country_id" t-field="doc.partner_invoice_id.country_id.name"/>
+                    <div t-if="doc.partner_invoice_id.phone">
+                        <i class="fa fa-phone"/> <span t-field="doc.partner_invoice_id.phone"/>
+                    </div>
+                </div>
+                <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
+                    <strong class="d-block mt-3">Shipping Address</strong>
+                    <div class="mb-0">
+                        <div t-field="doc.partner_shipping_id.name"/>
+                        <div t-if="doc.partner_shipping_id.street" t-field="doc.partner_shipping_id.street"/>
+                        <div t-if="doc.partner_shipping_id.street2" t-field="doc.partner_shipping_id.street2"/>
+                        <div>
+                            <span t-if="doc.partner_shipping_id.zip" t-field="doc.partner_shipping_id.zip"/>
+                            <span t-if="doc.partner_shipping_id.city" t-field="doc.partner_shipping_id.city"/>
+                        </div>
+                        <div t-if="doc.partner_shipping_id.state_id" t-field="doc.partner_shipping_id.state_id.name"/>
+                        <div t-if="doc.partner_shipping_id.country_id" t-field="doc.partner_shipping_id.country_id.name"/>
+                        <div t-if="doc.partner_shipping_id.phone">
+                            <i class="fa fa-phone"/> <span t-field="doc.partner_shipping_id.phone"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </xpath>
+        
+    </template>
+</odoo>
