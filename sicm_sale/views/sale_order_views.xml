@@ -12,11 +12,11 @@
                 <field name="client_order_ref" required="order_reference_required"/>
             </group>
 
-            <xpath expr="//field[@name='order_line']//list//field[@name='discount']" position="before">
+            <xpath expr="//field[@name='order_line']//list//field[@name='price_unit']" position="after">
                 <field name="increase" optional="show"/>
             </xpath>
 
-            <xpath expr="//field[@name='order_line']//list//field[@name='discount']" position="after">
+            <xpath expr="//field[@name='order_line']//list//field[@name='tax_ids']" position="before">
                 <field name="net_price" optional="show"/>
             </xpath>
         </field>
