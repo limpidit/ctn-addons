@@ -11,6 +11,14 @@
             <group name="order_details" position="inside">
                 <field name="client_order_ref" required="order_reference_required"/>
             </group>
+
+            <xpath expr="//field[@name='order_line']//list//field[@name='discount']" position="before">
+                <field name="increase" optional="show"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']//list//field[@name='discount']" position="after">
+                <field name="net_price" optional="show"/>
+            </xpath>
         </field>
     </record>
 
