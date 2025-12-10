@@ -6,7 +6,7 @@ class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
     increase = fields.Float(string="Increase%", default=0.0)
-    net_price = fields.Float(string="Net Price", compute="_compute_net_price", default=0.0, store=True)
+    net_price = fields.Float(string="Net Price", compute="_compute_net_price", store=True)
 
     @api.depends('price_unit', 'increase')
     def _compute_net_price(self):
@@ -15,4 +15,4 @@ class AccountMoveLine(models.Model):
 
     @api.depends('quantity', 'discount', 'tax_ids', 'increase', 'currency_id')
     def _compute_totals(self):
-        super()._compute_totals
+        super()._compute_totals()
