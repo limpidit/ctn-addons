@@ -17,7 +17,15 @@
         </xpath>
 
         <xpath expr="//t[@t-set='display_discount']" position="before">
+            <t t-set="display_reference" t-value="any(l.product_id.default_code for l in (lines_to_report or []))"/>
+        </xpath>
+
+        <xpath expr="//t[@t-set='display_discount']" position="before">
             <t t-set="display_increase" t-value="any(l.increase for l in lines_to_report or [])"/>
+        </xpath>
+
+        <xpath expr="//th[@id='product_name_header']" position="before">
+            <th id="product_ref_header" t-if="display_reference" class="text-start">Reference</th>
         </xpath>
 
         <xpath expr="//th[@id='product_unit_price_header']" position="after">
@@ -26,6 +34,11 @@
         </xpath>
 
         <xpath expr="//th[@id='taxes_header']" position="replace"/>
+
+        <xpath expr="//td[@name='td_product_name']" position="replace">
+            <td name="td_product_ref" t-if="display_reference" t-att-class="padding_class"><span t-field="line.product_id.default_code"/></td>
+            <td name="td_product_name" t-att-class="padding_class"><span t-field="line.product_id.name"/></td>
+        </xpath>
 
         <xpath expr="//td[@name='td_product_priceunit']" position="replace">
             <td name="td_product_priceunit" t-attf-class="text-end {{ 'd-none d-sm-table-cell' if report_type == 'html' else '' }}">
@@ -38,10 +51,7 @@
                         t-options="{'widget': 'monetary', 'display_currency': line.currency_id}"
                     />
                     <div t-if="line.discount and not display_increase">
-                        <t
-                            t-out="(1-line.discount / 100.0) * line.price_unit"
-                            t-options='{"widget": "float", "decimal_precision": "Product Price"}'
-                        />
+                        <t t-out="(1-line.discount / 100.0) * line.price_unit" t-options='{"widget": "float", "decimal_precision": "Product Price"}'/>
                     </div>
                 </t>
             </td>
