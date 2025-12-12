@@ -81,7 +81,7 @@
 
         <xpath expr="//th[@name='th_priceunit']" position="after">
             <th name="th_increase" t-if="display_increase" class="text-end"><span>Increase%</span></th>
-            <th name="th_net_price" class="text-end text-nowrap"><span>Net price</span></th>
+            <th name="th_net_price" t-if="display_increase" class="text-end text-nowrap"><span>Net price</span></th>
         </xpath>
 
         <xpath expr="//th[@name='th_taxes']" position="replace"/>
@@ -99,7 +99,7 @@
             <td name="td_increase" t-if="display_increase" t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                 <span class="text-nowrap" t-field="line.increase" t-options="{'widget': 'float', 'precision': 2}">0</span>
             </td>
-            <td name="td_net_price" t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+            <td name="td_net_price" t-if="display_increase" t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                 <span t-if="not hide_prices" class="text-nowrap" t-field="line.net_price">9.00</span>
             </td>
         </xpath>
