@@ -7,3 +7,4 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     order_reference_required = fields.Boolean(related="partner_id.order_reference_required",string="Order Reference Required",readonly=True,store=False)
+    partner_internal_note = fields.Html(string="Customer notes", related="partner_id.comment", readonly=True)
