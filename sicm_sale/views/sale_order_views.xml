@@ -12,6 +12,14 @@
                 <field name="client_order_ref" required="order_reference_required"/>
             </group>
 
+            <xpath expr="//notebook" position="inside">
+                <page string="Customer notes" name="partner_notes_page">
+                    <group>
+                        <field name="partner_internal_note" nolabel="1" widget="html" readonly="1"/>
+                    </group>
+                </page>
+            </xpath>
+
             <xpath expr="//field[@name='order_line']//list//field[@name='price_unit']" position="after">
                 <field name="increase" optional="show"/>
                 <field name="net_price" optional="show"/>
