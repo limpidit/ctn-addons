@@ -45,6 +45,43 @@
                 </t>
             </t>
         </xpath>
+
+        <xpath expr="//t[@t-set='display_discount']" position="before">
+            <t t-set="display_reference" t-value="any(l.product_id.default_code for l in (lines_to_report or []))"/>
+        </xpath>
+
+        <xpath expr="//t[@t-set='display_discount']" position="before">
+            <t t-set="display_increase" t-value="any(l.increase for l in lines_to_report or [])"/>
+        </xpath>
+
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_product_ref" t-if="display_reference" class="text-start">Reference</th>
+        </xpath>
+
+        <xpath expr="//th[@name='th_priceunit']" position="after">
+            <th name="th_increase" t-if="display_increase" class="text-end"><span>Increase%</span></th>
+            <th name="th_net_price" t-if="display_increase" class="text-end text-nowrap"><span>Net price</span></th>
+        </xpath>
+
+        <xpath expr="//th[@name='th_taxes']" position="replace"/>
+
+        <xpath expr="//td[@name='td_product_name']" position="replace">
+            <td name="td_product_ref" t-if="display_reference" t-att-class="padding_class">
+                <span t-field="line.product_id.default_code"/>
+            </td>
+            <td name="td_product_name" t-att-class="padding_class"><span t-field="line.product_id.name"/></td>
+        </xpath>
+
+        <xpath expr="//td[@name='td_product_priceunit']" position="after">
+            <td t-if="display_increase" name="td_product_increase" class="text-end">
+                <t t-if="not collapse_prices"><span t-field="line.increase" t-options="{'widget': 'float', 'precision': 2}">-</span></t>
+            </td>
+            <td t-if="display_increase" name="td_product_net_price" class="text-end text-nowrap">
+                <span t-if="not collapse_prices" t-field="line.net_price" t-options="{'widget': 'monetary', 'display_currency': line.currency_id}">25.00</span>
+            </td>
+        </xpath>
+
+        <xpath expr="//td[@name='td_product_taxes']" position="replace"/>
         
     </template>
 </odoo>
