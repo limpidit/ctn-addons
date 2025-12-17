@@ -22,7 +22,7 @@
         <xpath expr="//td[@id='product']" position="replace">
 
             <td t-if="display_vendor_ref" class="text-start" id="vendor_ref">
-                <t t-set="seller" t-value="line.product_id._select_seller(partner_id=o.partner_id)"/>
+                <t t-set="seller" t-value="line.product_id._select_seller(partner_id=o.partner_id.commercial_partner_id,quantity=l.product_qty)"/>
                 <span t-out="(seller and seller.product_code) or ''"/>
             </td>
 
