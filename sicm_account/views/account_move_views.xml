@@ -8,8 +8,8 @@
             <field name="inherit_id" ref="account.view_move_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='price_unit']" position="after">
-                    <field name="increase" />
-                    <field name="net_price" />
+                    <field name="increase" column_invisible="not parent.is_sicm_company"/>
+                    <field name="net_price" column_invisible="not parent.is_sicm_company"/>
                 </xpath>
             </field>
     </record>

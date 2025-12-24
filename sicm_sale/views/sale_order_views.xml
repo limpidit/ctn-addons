@@ -9,11 +9,12 @@
             <xpath expr="//field[@name='client_order_ref']" position="replace"/>
             
             <group name="order_details" position="inside">
-                <field name="client_order_ref" required="order_reference_required"/>
+                <field name="is_sicm_company" invisible="1"/>
+                <field name="client_order_ref"/>
             </group>
 
             <xpath expr="//notebook" position="inside">
-                <page string="Customer notes" name="partner_notes_page">
+                <page string="Customer notes" name="partner_notes_page" invisible="not is_sicm_company">
                     <group>
                         <field name="partner_internal_note" nolabel="1" widget="html" readonly="1"/>
                     </group>
@@ -21,8 +22,8 @@
             </xpath>
 
             <xpath expr="//field[@name='order_line']//list//field[@name='price_unit']" position="after">
-                <field name="increase" optional="show"/>
-                <field name="net_price" optional="show"/>
+                <field name="increase" column_invisible="not parent.is_sicm_company"/>
+                <field name="net_price" column_invisible="not parent.is_sicm_company"/>
             </xpath>
 
         </field>

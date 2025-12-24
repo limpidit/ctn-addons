@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e-20251021\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-11 15:03+0000\n"
-"PO-Revision-Date: 2025-12-11 15:03+0000\n"
+"POT-Creation-Date: 2025-12-24 13:29+0000\n"
+"PO-Revision-Date: 2025-12-24 13:29+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -69,6 +69,14 @@ msgstr "Majo.%"
 #: model:ir.model.fields,field_description:sicm_account.field_res_users__insured_amount
 msgid "Insured Amount"
 msgstr "Montant assuré"
+
+#. module: sicm_account
+#: model:ir.model.fields,field_description:sicm_account.field_account_bank_statement_line__is_sicm_company
+#: model:ir.model.fields,field_description:sicm_account.field_account_move__is_sicm_company
+#: model:ir.model.fields,field_description:sicm_account.field_res_partner__is_sicm_company
+#: model:ir.model.fields,field_description:sicm_account.field_res_users__is_sicm_company
+msgid "Is Sicm Company"
+msgstr "Est la société SICM"
 
 #. module: sicm_account
 #: model:ir.model,name:sicm_account.model_account_move

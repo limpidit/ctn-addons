@@ -5,6 +5,7 @@
     'author': 'Limpid IT',
     'license': 'LGPL-3',
     'depends': [
+        'sicm_base',
         'contacts'
     ],
     'auto_install': False,

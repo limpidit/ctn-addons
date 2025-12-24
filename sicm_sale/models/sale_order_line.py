@@ -7,6 +7,7 @@ class SaleOrderLine(models.Model):
 
     increase = fields.Float(string="Increase%", default=0.0)
     net_price = fields.Float(string="Net Price", compute="_compute_net_price", default=0.0, store=True, precompute=True)
+    is_sicm_company = fields.Boolean(related="order_id.is_sicm_company",store=False,readonly=True)
 
     @api.depends('price_unit', 'increase')
     def _compute_net_price(self):

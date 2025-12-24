@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e-20251021\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 14:07+0000\n"
-"PO-Revision-Date: 2025-12-12 14:07+0000\n"
+"POT-Creation-Date: 2025-12-24 13:32+0000\n"
+"PO-Revision-Date: 2025-12-24 13:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -62,7 +62,6 @@ msgstr ""
 
 #. module: sicm_sale
 #: model:ir.model.fields,field_description:sicm_sale.field_sale_order_line__increase
-#: model_terms:ir.ui.view,arch_db:sicm_sale.sale_order_portal_content_inherit_address
 msgid "Increase%"
 msgstr "Majo.%"
 
@@ -77,21 +76,24 @@ msgid "Invoicing and Shipping Address"
 msgstr "Adresse de facturation et de livraison"
 
 #. module: sicm_sale
+#: model:ir.model.fields,field_description:sicm_sale.field_sale_order__is_sicm_company
+#: model:ir.model.fields,field_description:sicm_sale.field_sale_order_line__is_sicm_company
+msgid "Is Sicm Company"
+msgstr "Est la société SICM"
+
+#. module: sicm_sale
 #: model:ir.model.fields,field_description:sicm_sale.field_sale_order_line__net_price
-#: model_terms:ir.ui.view,arch_db:sicm_sale.sale_order_portal_content_inherit_address
 msgid "Net Price"
 msgstr "Prix net"
 
 #. module: sicm_sale
 #: model:ir.model.fields,field_description:sicm_sale.field_res_partner__order_reference_required
 #: model:ir.model.fields,field_description:sicm_sale.field_res_users__order_reference_required
-#: model:ir.model.fields,field_description:sicm_sale.field_sale_order__order_reference_required
 msgid "Order Reference Required"
 msgstr "Référence commande obligatoire"
 
 #. module: sicm_sale
 #: model_terms:ir.ui.view,arch_db:sicm_sale.report_saleorder_document_inherit_shipping
-#: model_terms:ir.ui.view,arch_db:sicm_sale.sale_order_portal_content_inherit_address
 msgid "Reference"
 msgstr "Référence"
 
@@ -104,3 +106,15 @@ msgstr "Commande client"
 #: model:ir.model,name:sicm_sale.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Ligne de commande"
+
+#. module: sicm_sale
+#: model:ir.model.fields,field_description:sicm_sale.field_res_partner__show_order_reference_required
+#: model:ir.model.fields,field_description:sicm_sale.field_res_users__show_order_reference_required
+msgid "Show Order Reference Required"
+msgstr "Afficher référence commande obligatoire"
+
+#. module: sicm_sale
+#. odoo-python
+#: code:addons/sicm_sale/models/sale_order.py:0
+msgid "You must set a Customer Reference."
+msgstr "Vous devez définir une référence client."

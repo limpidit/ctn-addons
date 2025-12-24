@@ -5,6 +5,7 @@
     'author': 'LimpidIT',
     'license': 'LGPL-3',
     'depends': [
+        'sicm_base',
         'delivery'
     ],
     'data': [

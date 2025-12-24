@@ -7,7 +7,8 @@
         <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='tracking_url']" position="before">
-                <field name="warehouse_ids" widget="many2many_tags"/>
+                <field name="is_sicm_company" invisible="1"/>
+                <field name="warehouse_ids" widget="many2many_tags" invisible="not is_sicm_company"/>
             </xpath>
         </field>
     </record>

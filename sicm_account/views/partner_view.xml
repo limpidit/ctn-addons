@@ -7,7 +7,8 @@
         <field name="inherit_id" ref="account.view_partner_property_form"/> 
         <field name="arch" type="xml">
             <xpath expr="//field[@name='days_sales_outstanding']" position="after">
-                <field name="insured_amount"/>
+                <field name="is_sicm_company" invisible="1"/>
+                <field name="insured_amount" invisible="not is_sicm_company"/>
             </xpath>
         </field>
     </record>
