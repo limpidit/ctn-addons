@@ -34,7 +34,9 @@
                 <div><span t-esc="first_line"/></div>
 
                 <t t-if="len(name_lines) &gt; 1">
-                    <div><span t-esc="'\n'.join(name_lines[1:])" t-options="{'widget': 'text'}"/></div>
+                    <div class="text-muted fst-italic" style="font-size: 90%;">
+                        <span t-esc="'\n'.join(name_lines[1:])" t-options="{'widget': 'text'}"/>
+                    </div>
                 </t>
             </td>
         </xpath>
