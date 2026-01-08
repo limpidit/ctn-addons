@@ -119,7 +119,20 @@
                 <span t-field="line.product_id.default_code"/>
             </td>
             <td name="account_invoice_line_name" t-att-class="padding_class">
-                <span t-if="line.name" t-field="line.product_id.name" t-options="{'widget': 'text'}"/>
+                <t t-set="name_lines" t-value="(line.name or '').split('\n')"/>
+                <t t-set="first_line" t-value="name_lines[0] if name_lines else ''"/>
+
+                <t t-if="line.product_id.default_code">
+                    <t t-set="first_line" t-value="first_line.replace('[%s] ' % line.product_id.default_code, '')"/>
+                </t>
+
+                <div><span t-esc="first_line"/></div>
+
+                <t t-if="len(name_lines) &gt; 1">
+                    <div class="text-muted fst-italic" style="font-size: 90%;">
+                        <span t-esc="'\n'.join(name_lines[1:])" t-options="{'widget': 'text'}"/>
+                    </div>
+                </t>
             </td>
         </xpath>
 
