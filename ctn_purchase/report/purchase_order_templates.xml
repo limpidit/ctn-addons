@@ -14,22 +14,30 @@
                 </t>
             </t>
 
-            <th name="th_vendor_ref" t-if="display_vendor_ref" class="text-start">
-                <strong>Reference</strong>
-            </th>
+            <th name="th_vendor_ref" t-if="display_vendor_ref" class="text-start"><strong>Reference</strong></th>
         </xpath>
 
         <xpath expr="//td[@id='product']" position="replace">
-
             <td t-if="display_vendor_ref" class="text-start" id="vendor_ref">
                 <t t-set="seller" t-value="line.product_id._select_seller(partner_id=o.partner_id.commercial_partner_id,quantity=l.product_qty)"/>
                 <span t-out="(seller and seller.product_code) or ''"/>
             </td>
 
             <td id="product" class="text-start">
-                <span t-field="line.product_id.name"/>
+                <t t-set="name_lines" t-value="(line.name or '').split('\n')"/>
+                <t t-set="first_line" t-value="name_lines[0] if name_lines else ''"/>
+
+                <t t-if="line.product_id and line.product_id.default_code">
+                    <t t-set="first_line" t-value="first_line.replace('[%s] ' % line.product_id.default_code, '')"/>
+                </t>
+
+                <div><span t-esc="first_line"/></div>
+
+                <t t-if="len(name_lines) &gt; 1">
+                    <div><span t-esc="'\n'.join(name_lines[1:])" t-options="{'widget': 'text'}"/></div>
+                </t>
             </td>
-            </xpath>
+        </xpath>
 
     </template>
 
