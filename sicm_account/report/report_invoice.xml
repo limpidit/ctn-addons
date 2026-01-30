@@ -146,7 +146,7 @@
                 <td name="td_net_price"
                     t-if="is_sicm and display_increase"
                     t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
-                    <span t-if="not hide_prices" class="text-nowrap" t-field="line.net_price">9.00</span>
+                    <span t-if="not hide_prices" class="text-nowrap" t-field="line.net_price" t-options="{'widget': 'float', 'precision': 2}">9.00</span>
                 </td>
             </t>
         </xpath>

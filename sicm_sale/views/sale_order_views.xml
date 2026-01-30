@@ -23,6 +23,9 @@
 
             <xpath expr="//field[@name='order_line']//list//field[@name='price_unit']" position="after">
                 <field name="increase" column_invisible="not parent.is_sicm_company"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']//list//field[@name='price_subtotal'][1]" position="before">
                 <field name="net_price" column_invisible="not parent.is_sicm_company"/>
             </xpath>
 
