@@ -19,3 +19,12 @@ class SaleOrder(models.Model):
         for order in self:
             if (order.company_id and order.company_id.is_sicm_company() and order.partner_id.order_reference_required and not order.client_order_ref):
                 raise ValidationError(_("You must set a Customer Reference."))
+
+    def copy(self, default=None):
+        self.ensure_one()
+        default = dict(default or {})
+
+        if (self.company_id and self.company_id.is_sicm_company() and self.partner_id.order_reference_required):
+            default.setdefault("client_order_ref", self.client_order_ref or "")
+
+        return super().copy(default)
