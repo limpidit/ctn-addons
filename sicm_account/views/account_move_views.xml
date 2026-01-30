@@ -9,6 +9,8 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='price_unit']" position="after">
                     <field name="increase" column_invisible="not parent.is_sicm_company"/>
+                </xpath>
+                <xpath expr="//field[@name='discount']" position="after">
                     <field name="net_price" column_invisible="not parent.is_sicm_company"/>
                 </xpath>
             </field>
