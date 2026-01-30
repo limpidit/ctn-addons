@@ -104,6 +104,9 @@
 
         <xpath expr="//th[@name='th_priceunit']" position="after">
             <th name="th_increase" t-if="is_sicm and display_increase" class="text-end"><span>Increase%</span></th>
+        </xpath>
+
+        <xpath expr="//th[@name='th_discount']" position="after">
             <th name="th_net_price" t-if="is_sicm and display_increase" class="text-end text-nowrap"><span>Net price</span></th>
         </xpath>
 
@@ -143,13 +146,18 @@
                     t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                     <span class="text-nowrap" t-field="line.increase" t-options="{'widget': 'float', 'precision': 2}">0</span>
                 </td>
+            </t>
+        </xpath>
+
+        <xpath expr="//td[@name='td_discount']" position="after">
+            <t t-if="is_sicm">
                 <td name="td_net_price"
                     t-if="is_sicm and display_increase"
                     t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                     <span t-if="not hide_prices" class="text-nowrap" t-field="line.net_price" t-options="{'widget': 'float', 'precision': 2}">9.00</span>
                 </td>
             </t>
-        </xpath>
+        </xpath>    
 
         <xpath expr="//td[@name='td_taxes']" position="attributes">
             <attribute name="t-if">not is_sicm</attribute>
