@@ -27,6 +27,13 @@
                 <t t-set="name_lines" t-value="(line.name or '').split('\n')"/>
                 <t t-set="first_line" t-value="name_lines[0] if name_lines else ''"/>
 
+                <t t-set="seller" t-value="line.product_id._select_seller(partner_id=o.partner_id.commercial_partner_id, quantity=line.product_qty)"/>
+                <t t-set="vendor_ref" t-value="(seller and seller.product_code) or ''"/>
+
+                <t t-if="vendor_ref">
+                    <t t-set="first_line" t-value="first_line.replace('[%s] ' % vendor_ref, '')"/>
+                </t>
+
                 <t t-if="line.product_id and line.product_id.default_code">
                     <t t-set="first_line" t-value="first_line.replace('[%s] ' % line.product_id.default_code, '')"/>
                 </t>
@@ -84,7 +91,50 @@
 
         <xpath expr="//div[@id='total']" position="attributes">
             <attribute name="t-if">not dont_show_prices</attribute>
-            </xpath>
+        </xpath>
+
+    </template>
+
+    <template id="report_purchasequotation_document_add_vendor_ref_column" inherit_id="purchase.report_purchasequotation_document">
+        <xpath expr="//th[@name='th_description']" position="before">
+            <t t-set="display_vendor_ref" t-value="False"/>
+            <t t-foreach="o.order_line" t-as="l">
+                <t t-if="not l.display_type">
+                    <t t-set="seller" t-value="l.product_id._select_seller(partner_id=o.partner_id.commercial_partner_id, quantity=l.product_qty)"/>
+                    <t t-if="seller and seller.product_code"> <t t-set="display_vendor_ref" t-value="True"/> </t>
+                </t>
+            </t>
+
+            <th name="th_vendor_ref" t-if="display_vendor_ref" class="text-start"><strong>Reference</strong></th>
+        </xpath>
+        <xpath expr="//td[@id='product']" position="replace">
+
+            <td t-if="display_vendor_ref" class="text-start" id="vendor_ref">
+                <t t-set="seller" t-value="order_line.product_id._select_seller(partner_id=o.partner_id.commercial_partner_id, quantity=order_line.product_qty)"/>
+                <span t-out="(seller and seller.product_code) or ''"/>
+            </td>
+
+            <td id="product">
+                <t t-set="name_lines" t-value="(order_line.name or '').split('\n')"/>
+                <t t-set="first_line" t-value="name_lines[0] if name_lines else ''"/>
+
+                <t t-set="seller" t-value="order_line.product_id._select_seller(partner_id=o.partner_id.commercial_partner_id, quantity=order_line.product_qty)"/>
+                <t t-set="vendor_ref" t-value="(seller and seller.product_code) or ''"/>
+
+                <t t-if="vendor_ref"> <t t-set="first_line" t-value="first_line.replace('[%s] ' % vendor_ref, '')"/> </t>
+
+                <t t-if="order_line.product_id and order_line.product_id.default_code"> <t t-set="first_line" t-value="first_line.replace('[%s] ' % order_line.product_id.default_code, '')"/> </t>
+
+                <div> <span t-esc="first_line"/> </div>
+
+                <t t-if="len(name_lines) &gt; 1">
+                    <div class="text-muted fst-italic" style="font-size: 90%;">
+                        <span t-esc="'\n'.join(name_lines[1:])" t-options="{'widget': 'text'}"/>
+                    </div>
+                </t>
+            </td>
+
+        </xpath>
 
     </template>
 
