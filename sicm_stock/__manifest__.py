@@ -5,11 +5,13 @@
     'author': 'LimpidIT',
     'license': 'LGPL-3',
     'depends': [
+        'stock',
         'sicm_base',
         'delivery'
     ],
     'data': [
-        'views/delivery_carrier_views.xml'
+        'views/delivery_carrier_views.xml',
+        'report/report_stockpicking_operations.xml',
     ],
     'auto_install': False,
     'application': False,

@@ -6,14 +6,44 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e-20251021\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-24 13:36+0000\n"
-"PO-Revision-Date: 2025-12-24 13:36+0000\n"
+"POT-Creation-Date: 2026-02-03 16:01+0000\n"
+"PO-Revision-Date: 2026-02-03 16:01+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: sicm_stock
+#: model_terms:ir.ui.view,arch_db:sicm_stock.report_picking_sicm
+msgid "(document barcode)"
+msgstr ""
+
+#. module: sicm_stock
+#: model_terms:ir.ui.view,arch_db:sicm_stock.report_picking_sicm
+msgid "(product barcode)"
+msgstr ""
+
+#. module: sicm_stock
+#: model_terms:ir.ui.view,arch_db:sicm_stock.report_picking_sicm
+msgid "(serial barcode)"
+msgstr ""
+
+#. module: sicm_stock
+#: model_terms:ir.ui.view,arch_db:sicm_stock.report_picking_sicm
+msgid "3.00"
+msgstr ""
+
+#. module: sicm_stock
+#: model_terms:ir.ui.view,arch_db:sicm_stock.report_picking_sicm
+msgid "<strong>Barcode</strong>"
+msgstr "<strong>Code-barres</strong>"
+
+#. module: sicm_stock
+#: model_terms:ir.ui.view,arch_db:sicm_stock.report_picking_sicm
+msgid "<strong>From</strong>"
+msgstr "<strong>De</strong>"
 
 #. module: sicm_stock
 #: model:ir.model.fields,field_description:sicm_stock.field_delivery_carrier__display_name
@@ -37,11 +67,36 @@ msgid "Is Sicm Company"
 msgstr "Est la société SICM"
 
 #. module: sicm_stock
+#: model_terms:ir.ui.view,arch_db:sicm_stock.report_picking_sicm
+msgid "Package A"
+msgstr ""
+
+#. module: sicm_stock
+#: model_terms:ir.ui.view,arch_db:sicm_stock.report_picking_sicm
+msgid "Picking list"
+msgstr "Bon de prépa"
+
+#. module: sicm_stock
 #: model:ir.model,name:sicm_stock.model_delivery_carrier
 msgid "Shipping Methods"
 msgstr "Modes d'expédition"
 
 #. module: sicm_stock
+#: model_terms:ir.ui.view,arch_db:sicm_stock.report_picking_sicm
+msgid "WH/Outgoing"
+msgstr ""
+
+#. module: sicm_stock
+#: model_terms:ir.ui.view,arch_db:sicm_stock.report_picking_sicm
+msgid "WH/Stock"
+msgstr ""
+
+#. module: sicm_stock
 #: model:ir.model.fields,field_description:sicm_stock.field_delivery_carrier__warehouse_ids
 msgid "Warehouses"
 msgstr "Entrepôts"
+
+#. module: sicm_stock
+#: model_terms:ir.ui.view,arch_db:sicm_stock.report_picking_sicm
+msgid "units"
+msgstr ""
