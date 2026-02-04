@@ -67,7 +67,8 @@
             </t>
         </xpath>
 
-        <xpath expr="//t[@t-foreach='move_lines_without_entire_pack']" position="replace">
+        
+        <xpath expr="//t[contains(@t-foreach, 'move_lines_without_entire_pack') and @t-as='line']" position="replace">
             <t t-if="o.env.company != o.env.ref('sicm_base.company_sicm')">
                 <t t-foreach="move_lines_without_entire_pack.sorted(key=lambda ml: (ml.location_id.complete_name, ml.location_dest_id.complete_name))" t-as="line" t-if="move_has_multiple_lines">
                     <tr>
