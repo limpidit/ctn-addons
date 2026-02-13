@@ -29,10 +29,9 @@ class AccountMoveLine(models.Model):
         if self.move_id.company_id.is_sicm_company():
             for line in self:
                 qty = line.quantity or 0.0
-                price_unit = line.net_price * (1 + (line.discount or 0) / 100)
+                price_unit = line.net_price
                 currency = line.currency_id or line.move_id.currency_id
                 partner = line.partner_id or line.move_id.partner_id
-
 
                 taxes_res = line.tax_ids.compute_all(
                     price_unit,
