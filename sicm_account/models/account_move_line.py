@@ -29,7 +29,7 @@ class AccountMoveLine(models.Model):
         if self.move_id.company_id.is_sicm_company():
             for line in self:
                 qty = line.quantity or 0.0
-                price_unit = line.net_price
+                price_unit = line.net_price * (1 + (line.discount or 0) / 100)
                 currency = line.currency_id or line.move_id.currency_id
                 partner = line.partner_id or line.move_id.partner_id
 
@@ -44,5 +44,6 @@ class AccountMoveLine(models.Model):
 
                 line.price_subtotal = taxes_res['total_excluded']
                 line.price_total = taxes_res['total_included']
+
         else:
             super(AccountMoveLine, self)._compute_totals()
