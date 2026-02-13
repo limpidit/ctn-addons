@@ -42,8 +42,8 @@ class SaleOrderLine(models.Model):
             base_line = line._prepare_base_line_for_taxes_computation()
             AccountTax._add_tax_details_in_base_line(base_line, company)
             AccountTax._round_base_lines_tax_details([base_line], company)
-            line.price_subtotal = base_line['tax_details']['total_excluded_currency']
-            line.price_total = base_line['tax_details']['total_included_currency']
+            line.price_subtotal = round(base_line['tax_details']['total_excluded_currency'] * (1 + line.increase / 100), 2)
+            line.price_total = round(base_line['tax_details']['total_included_currency'] * (1 + line.increase / 100), 2)
             line.price_tax = line.price_total - line.price_subtotal
 
     # def _prepare_base_line_for_taxes_computation(self, **kwargs):
