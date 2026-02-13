@@ -34,7 +34,7 @@ class SaleOrderLine(models.Model):
     #             'price_total': taxes_res['total_included'],
     #         })
 
-    @api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_ids')
+    @api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_ids', 'increase')
     def _compute_amount(self):
         AccountTax = self.env['account.tax']
         for line in self:
