@@ -6,9 +6,15 @@ from odoo.exceptions import ValidationError
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    partner_internal_note = fields.Html(string="Customer notes", related="partner_id.comment", readonly=True)
+    partner_internal_note = fields.Html(string="Customer notes", compute="_compute_partner_internal_note", readonly=True, store=False)
     is_sicm_company = fields.Boolean(compute="_compute_is_sicm_company",store=False)
 
+    @api.depends('partner_id', 'partner_id.commercial_partner_id', 'partner_id.commercial_partner_id.comment', 'partner_id.comment')
+    def _compute_partner_internal_note(self):
+        for order in self:
+            partner = order.partner_id.commercial_partner_id if order.partner_id else False
+            order.partner_internal_note = partner.comment if partner else False
+            
     @api.depends('company_id')
     def _compute_is_sicm_company(self):
         for order in self:
