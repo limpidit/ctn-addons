@@ -8,6 +8,7 @@
         'stock'
     ],
     'data': [
+        'report/report_deliveryslip.xml',
         'views/stock_picking_views.xml'
     ],
     'auto_install': False,
