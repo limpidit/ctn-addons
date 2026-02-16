@@ -52,6 +52,15 @@
             </t>
         </xpath>
 
+        <xpath expr="//div[@name='expiration_date']" position="replace">
+            <t t-if="is_sicm">
+                <div t-if="doc.validity_date and doc.state in ['draft', 'sent']" class="col" name="expiration_date"> 
+                    <strong>Expiration date</strong>
+                    <div t-field="doc.validity_date">2023-12-31</div>
+                </div>
+            </t>
+        </xpath>
+
         <xpath expr="//t[@t-set='display_discount']" position="before">
             <t t-set="display_reference" t-value="any(l.product_id.default_code for l in (lines_to_report or []))"/>
         </xpath>
