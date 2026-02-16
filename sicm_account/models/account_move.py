@@ -18,5 +18,6 @@ class AccountMove(models.Model):
 
         if self.is_invoice(include_receipts=True):
             base_line['price_unit'] = product_line.net_price or product_line.price_unit
+            base_line['discount'] = 0.0
 
         return base_line
