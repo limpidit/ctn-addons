@@ -24,6 +24,23 @@
             </t>
         </xpath>
 
+        <xpath expr="//table[contains(@class,'o_main_table')]//th[@name='th_product']" position="replace">
+            <t t-if="o.env.company == o.env.ref('sicm_base.company_sicm')">
+                <th name="th_product_code" class="text-start">
+                    <strong>Reference</strong>
+                </th>
+                <th name="th_supplier_code" class="text-start">
+                    <strong>Supplier Reference</strong>
+                </th>
+            </t>
+            <t t-else="">
+                <th name="th_product" class="text-start">
+                    <strong>Product</strong>
+                </th>
+            </t>
+        </xpath>
+
+
         <xpath expr="//th[@name='th_from']" position="replace">
             <t t-if="o.env.company != o.env.ref('sicm_base.company_sicm')">
                 <th name="th_from" class="text-start" t-if="from_col_exists" groups="stock.group_stock_multi_locations">
@@ -63,6 +80,29 @@
                             </div>
                         </div>
                     </span>
+                </td>
+            </t>
+        </xpath>
+
+        <xpath expr="//table[contains(@class,'o_main_table')]//tbody//tr/td[span[@t-field='move.product_id.display_name']]" position="replace">
+            <t t-if="o.env.company == o.env.ref('sicm_base.company_sicm')">
+                <td class="text-start">
+                    <span t-field="move.product_id.default_code"/>
+                </td>
+
+                <td class="text-start">
+                    <t t-set="vendor" t-value="(o.partner_id.commercial_partner_id if o.picking_type_id.code == 'incoming' else False)"/>
+                    <t t-set="seller" t-value="(move.product_id.seller_ids.filtered(lambda s: vendor and s.partner_id == vendor)[:1] or move.product_id.seller_ids[:1])"/>
+                    <span t-if="seller" t-out="seller.product_code"/>
+                </td>
+            </t>
+            <t t-else="">
+                <td class="text-start">
+                    <span t-field="move.product_id.display_name"/>
+                    <br t-if="move.description_picking and move.description_picking != move.product_id.name and move.description_picking != move.product_id.display_name"/>
+                    <t t-if="move.description_picking and move.description_picking != move.product_id.name and move.description_picking != move.product_id.display_name">
+                        <span t-out="move.description_picking" t-options="{'widget': 'text'}"/>
+                    </t>
                 </td>
             </t>
         </xpath>
