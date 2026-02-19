@@ -10,10 +10,11 @@ class AccountMoveLine(models.Model):
 
     @api.depends('price_unit', 'increase', 'discount')
     def _compute_net_price(self):
-        if self.move_id.company_id.is_sicm_company():
-            for line in self:
-                base = line.price_unit * (1 + (line.increase or 0) / 100)
-                line.net_price = base * (1 - (line.discount or 0) / 100)
+        for line in self:
+            if line.move_id.company_id.is_sicm_company():
+                for line in self:
+                    base = line.price_unit * (1 + (line.increase or 0) / 100)
+                    line.net_price = base * (1 - (line.discount or 0) / 100)
 
     @api.depends(
         'quantity',
