@@ -1,7 +1,7 @@
 {
-    'name': 'SICM Products',
+    'name': 'CTN Products',
     'version': '1.0',
-    'description': 'SICM Products',
+    'description': 'CTN Products',
     'author': 'Limpid IT',
     'license': 'LGPL-3',
     'depends': [

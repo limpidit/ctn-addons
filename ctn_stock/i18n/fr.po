@@ -1,0 +1,41 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ctn_stock
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e-20251021\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-16 14:18+0000\n"
+"PO-Revision-Date: 2026-02-16 14:18+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: ctn_stock
+#: model_terms:ir.ui.view,arch_db:ctn_stock.report_delivery_document_ctn
+msgid "<strong>Reference</strong>"
+msgstr "<strong>Référence</strong>"
+
+#. module: ctn_stock
+#: model:ir.model.fields,field_description:ctn_stock.field_stock_move__display_name
+msgid "Display Name"
+msgstr "Nom d'affichage"
+
+#. module: ctn_stock
+#: model:ir.model.fields,field_description:ctn_stock.field_stock_move__id
+msgid "ID"
+msgstr ""
+
+#. module: ctn_stock
+#: model:ir.model,name:ctn_stock.model_stock_move
+msgid "Stock Move"
+msgstr "Mouvement de stock"
+
+#. module: ctn_stock
+#: model:ir.model.fields,field_description:ctn_stock.field_stock_move__vendor_label
+msgid "Vendor Ref"
+msgstr "Référence fournisseur"

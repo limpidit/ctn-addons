@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_saleorder_document_inherit_shipping" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//t[@t-set='doc']" position="after">
+            <t t-set="is_sicm" t-value="doc.env.company == doc.env.ref('sicm_base.company_sicm')"/>
+        </xpath>
 
-        <xpath expr="//t[@t-set='information_block']" position="replace">
-            <t t-set="information_block">
+        <xpath expr="//t[@t-set='information_block']" position="attributes">
+            <attribute name="t-if">not is_sicm</attribute>
+        </xpath>
+        <xpath expr="//t[@t-set='information_block']" position="after">
+            <t t-if="is_sicm" t-set="information_block">
                 <strong>
                     <t t-if="doc.partner_shipping_id == doc.partner_invoice_id">
                         Invoicing and Shipping Address
@@ -44,6 +50,89 @@
                     </div>
                 </t>
             </t>
+        </xpath>
+
+        <xpath expr="//div[@name='expiration_date']" position="replace">
+            <t t-if="is_sicm">
+                <div t-if="doc.validity_date and doc.state in ['draft', 'sent']" class="col" name="expiration_date"> 
+                    <strong>Expiration date</strong>
+                    <div t-field="doc.validity_date">2023-12-31</div>
+                </div>
+            </t>
+        </xpath>
+
+        <xpath expr="//t[@t-set='display_discount']" position="before">
+            <t t-set="display_reference" t-value="any(l.product_id.default_code for l in (lines_to_report or []))"/>
+        </xpath>
+
+        <xpath expr="//t[@t-set='display_discount']" position="before">
+            <t t-set="display_increase" t-value="any(l.increase for l in lines_to_report or [])"/>
+        </xpath>
+
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_product_ref" t-if="display_reference" class="text-start">Reference</th>
+        </xpath>
+
+        <xpath expr="//th[@name='th_priceunit']" position="after">
+            <t t-if="is_sicm">
+                <th name="th_increase" t-if="display_increase" class="text-end"><span>Increase%</span></th>
+            </t>
+        </xpath>
+
+        <xpath expr="//th[@name='th_discount']" position="after">
+            <t t-if="is_sicm">
+                <th name="th_net_price" t-if="display_increase" class="text-end text-nowrap"><span>Net price</span></th>
+            </t>
+        </xpath>
+
+        <xpath expr="//th[@name='th_taxes']" position="attributes">
+            <attribute name="t-if">not is_sicm</attribute>
+        </xpath>
+
+        <xpath expr="//td[@name='td_product_name']" position="attributes">
+            <attribute name="t-if">not is_sicm</attribute>
+        </xpath>
+
+        <xpath expr="//td[@name='td_product_name']" position="replace">
+            <td name="td_product_ref" t-if="display_reference" t-att-class="padding_class">
+                <span t-field="line.product_id.default_code"/>
+            </td>
+            <td name="td_product_name" t-att-class="padding_class">
+                <t t-set="name_lines" t-value="(line.name or '').split('\n')"/>
+                <t t-set="first_line" t-value="name_lines[0] if name_lines else ''"/>
+
+                <t t-if="line.product_id.default_code">
+                    <t t-set="first_line" t-value="first_line.replace('[%s] ' % line.product_id.default_code, '')"/>
+                </t>
+
+                <div><span t-esc="first_line"/></div>
+
+                <t t-if="len(name_lines) &gt; 1">
+                    <div class="text-muted fst-italic" style="font-size: 90%;">
+                        <span t-esc="'\n'.join(name_lines[1:])" t-options="{'widget': 'text'}"/>
+                    </div>
+                </t>
+            </td>
+        </xpath>
+
+        <xpath expr="//td[@name='td_product_priceunit']" position="after">
+            <t t-if="is_sicm">
+                <td t-if="display_increase" name="td_product_increase" class="text-end">
+                    <t t-if="not collapse_prices"><span t-field="line.increase" t-options="{'widget': 'float', 'precision': 2}">-</span></t>
+                </td>
+            </t>
+        </xpath>
+
+        <xpath expr="//td[@name='td_product_discount']" position="after">
+            <t t-if="is_sicm">
+                <td t-if="display_increase" name="td_product_net_price" class="text-end text-nowrap">
+                    <span t-if="not collapse_prices" t-field="line.net_price" t-options="{'widget': 'monetary', 'display_currency': line.currency_id}">25.00</span>
+                </td>
+            </t>
+        </xpath>
+
+        <xpath expr="//td[@name='td_product_taxes']" position="attributes">
+            <attribute name="t-if">not is_sicm</attribute>
         </xpath>
         
     </template>

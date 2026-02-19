@@ -2,15 +2,33 @@
 <odoo>
 
     <record id="view_order_form_sicm_sale" model="ir.ui.view">
-        <field name="name">sale.order.form</field>
+        <field name="name">sale.order.form.sicm.sale</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='client_order_ref']" position="replace"/>
             
             <group name="order_details" position="inside">
-                <field name="client_order_ref" required="order_reference_required"/>
+                <field name="is_sicm_company" invisible="1"/>
+                <field name="client_order_ref"/>
             </group>
+
+            <xpath expr="//notebook" position="inside">
+                <page string="Customer notes" name="partner_notes_page" invisible="not is_sicm_company">
+                    <group>
+                        <field name="partner_internal_note" nolabel="1" widget="html" readonly="1"/>
+                    </group>
+                </page>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']//list//field[@name='price_unit']" position="after">
+                <field name="increase" column_invisible="not parent.is_sicm_company"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']//list//field[@name='price_subtotal'][1]" position="before">
+                <field name="net_price" column_invisible="not parent.is_sicm_company"/>
+            </xpath>
+
         </field>
     </record>
 

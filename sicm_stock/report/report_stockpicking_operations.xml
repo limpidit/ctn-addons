@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_picking_sicm" inherit_id="stock.report_picking">
+
+        <xpath expr="//div[@class='row justify-content-between']//div[@class='col-4']/h3" position="replace">
+            <t t-if="o.env.company == o.env.ref('sicm_base.company_sicm')">
+                <h3>Picking list</h3>
+            </t>
+            <t t-else="">
+                <h3 t-field="o.picking_type_id.code"/>
+            </t>
+        </xpath>
+        
+        <xpath expr="//div[@class='row justify-content-between']//div[@name='right_box']/div[@t-field='o.name']" position="replace">
+            <t t-if="o.env.company != o.env.ref('sicm_base.company_sicm')">
+                <div class="col-8" name="right_box">
+                    <div t-field="o.name" style="display:flex;justify-content:flex-end;display:-webkit-box;-webkit-box-pack:end;" t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:300px;height:50px;margin-right:0;'}">
+                        <div class="bg-light border-1 rounded d-flex flex-column align-items-center justify-content-center p-3 opacity-75 text-muted text-center">
+                            (document barcode)
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+
+        <xpath expr="//table[contains(@class,'o_main_table')]//th[@name='th_product']" position="replace">
+            <t t-if="o.env.company == o.env.ref('sicm_base.company_sicm')">
+                <th name="th_product_code" class="text-start">
+                    <strong>Reference</strong>
+                </th>
+                <th name="th_supplier_code" class="text-start">
+                    <strong>Supplier Reference</strong>
+                </th>
+            </t>
+            <t t-else="">
+                <th name="th_product" class="text-start">
+                    <strong>Product</strong>
+                </th>
+            </t>
+        </xpath>
+
+
+        <xpath expr="//th[@name='th_from']" position="replace">
+            <t t-if="o.env.company != o.env.ref('sicm_base.company_sicm')">
+                <th name="th_from" class="text-start" t-if="from_col_exists" groups="stock.group_stock_multi_locations">
+                    <strong>From</strong>
+                </th>
+            </t>
+        </xpath>
+
+        <xpath expr="//td[@t-if='from_col_exists']" position="replace">
+            <t t-if="o.env.company != o.env.ref('sicm_base.company_sicm')">
+                <td class="text-start" t-if="from_col_exists" groups="stock.group_stock_multi_locations">
+                    <div t-if="move.move_line_ids and not move_has_multiple_lines">
+                        <span t-field="move.move_line_ids[0].location_id.display_name">WH/Stock</span>
+                        <t t-if="move.move_line_ids[0].package_id">
+                            <span t-field="move.move_line_ids[0].package_id">Package A</span>
+                        </t>
+                    </div>
+                </td>
+            </t>
+        </xpath>
+
+        <xpath expr="//th[@name='th_barcode']" position="replace">
+            <t t-if="o.env.company != o.env.ref('sicm_base.company_sicm')">
+                <th name="th_barcode" class="text-center" t-if="barcode_col_exists">
+                    <strong>Barcode</strong>
+                </th>
+            </t>
+        </xpath>
+
+        <xpath expr="//td[@class='text-center' and @t-if='barcode_col_exists']" position="replace">
+            <t t-if="o.env.company != o.env.ref('sicm_base.company_sicm')">
+                <td class="text-center" t-if="barcode_col_exists">
+                    <span t-if="move.product_id and move.product_id.barcode">
+                        <div t-field="move.product_id.barcode" t-options="{'widget': 'barcode', 'symbology': 'auto', 'width': 400, 'height': 100, 'quiet': 0, 'img_style': 'height:35px;'}">
+                            <div class="bg-light border-1 rounded d-flex flex-column align-items-center justify-content-center px-1 py-2 opacity-75 text-muted text-center">
+                                (product barcode)
+                            </div>
+                        </div>
+                    </span>
+                </td>
+            </t>
+        </xpath>
+
+        <xpath expr="//table[contains(@class,'o_main_table')]//tbody//tr/td[span[@t-field='move.product_id.display_name']]" position="replace">
+            <t t-if="o.env.company == o.env.ref('sicm_base.company_sicm')">
+                <td class="text-start">
+                    <span t-field="move.product_id.default_code"/>
+                </td>
+
+                <td class="text-start">
+                    <t t-set="vendor" t-value="(o.partner_id.commercial_partner_id if o.picking_type_id.code == 'incoming' else False)"/>
+                    <t t-set="seller" t-value="(move.product_id.seller_ids.filtered(lambda s: vendor and s.partner_id == vendor)[:1] or move.product_id.seller_ids[:1])"/>
+                    <span t-if="seller" t-out="seller.product_code"/>
+                </td>
+            </t>
+            <t t-else="">
+                <td class="text-start">
+                    <span t-field="move.product_id.display_name"/>
+                    <br t-if="move.description_picking and move.description_picking != move.product_id.name and move.description_picking != move.product_id.display_name"/>
+                    <t t-if="move.description_picking and move.description_picking != move.product_id.name and move.description_picking != move.product_id.display_name">
+                        <span t-out="move.description_picking" t-options="{'widget': 'text'}"/>
+                    </t>
+                </td>
+            </t>
+        </xpath>
+
+        
+        <xpath expr="//t[contains(@t-foreach, 'move_lines_without_entire_pack') and @t-as='line']" position="replace">
+            <t t-if="o.env.company != o.env.ref('sicm_base.company_sicm')">
+                <t t-foreach="move_lines_without_entire_pack.sorted(key=lambda ml: (ml.location_id.complete_name, ml.location_dest_id.complete_name))" t-as="line" t-if="move_has_multiple_lines">
+                    <tr>
+                        <td class="text-start">
+                            <span style="margin-left: 50px;" t-if="line.lot_id or line.lot_name" t-out="line.lot_id.name"></span>
+                        </td>
+                        <td class="text-end">
+                            <span t-out="format_number(line.quantity)">3.00</span>
+                            <span t-field="line.product_uom_id" groups="uom.group_uom">units</span>
+                        </td>
+                        <td class="text-start" t-if="from_col_exists" groups="stock.group_stock_multi_locations">
+                            <span t-field="line.location_id.display_name">WH/Stock</span>
+                            <t t-if="line.package_id">
+                                <span t-field="line.package_id">Package A</span>
+                            </t>
+                        </td>
+                        <td class="text-start" t-if="to_col_exists" groups="stock.group_stock_multi_locations">
+                            <span t-field="line.location_dest_id.display_name">WH/Outgoing</span>
+                            <t t-if="line.result_package_id">
+                                <span t-field="line.result_package_id">Package A</span>
+                            </t>
+                        </td>
+                        <td class=" text-center h6" t-if="barcode_col_exists">
+                            <span t-if="line.lot_id or line.lot_name" t-out="line.lot_id.name or line.lot_name" t-options="{'widget': 'barcode', 'humanreadable': 1, 'width': 400, 'height': 100, 'img_style': 'width:100%;height:35px;'}">
+                                <div class="bg-light border-1 rounded d-flex flex-column align-items-center justify-content-center px-1 py-2 opacity-75 text-muted text-center">
+                                    (serial barcode)
+                                </div>
+                            </span>
+                        </td>
+                    </tr>
+                </t>
+            </t>
+        </xpath>
+        
+    </template>
+
+</odoo>

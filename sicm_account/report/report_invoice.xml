@@ -2,8 +2,17 @@
 <odoo>
 
     <template id="report_invoice_document_inherit_shipping" inherit_id="account.report_invoice_document">
-        <xpath expr="//div[@name='shipping_address_block']//div[@t-field='o.partner_shipping_id']" position="replace">
-            <div class="mb-0">
+
+        <xpath expr="//t[@t-set='o']" position="after">
+            <t t-set="is_sicm" t-value="o.env.company == o.env.ref('sicm_base.company_sicm')"/>
+        </xpath>
+
+        <xpath expr="//div[@name='shipping_address_block']//div[@t-field='o.partner_shipping_id']" position="attributes">
+            <attribute name="t-if">not is_sicm</attribute>
+        </xpath>
+
+        <xpath expr="//div[@name='shipping_address_block']//div[@t-field='o.partner_shipping_id']" position="after">
+            <div class="mb-0" t-if="is_sicm">
                 <div t-field="o.partner_shipping_id.name"/>
                 <div t-if="o.partner_shipping_id.street" t-field="o.partner_shipping_id.street"/>
                 <div t-if="o.partner_shipping_id.street2" t-field="o.partner_shipping_id.street2"/>
@@ -16,8 +25,12 @@
             </div>
         </xpath>
 
-        <xpath expr="//div[@name='address_not_same_as_shipping']//address[@t-field='o.partner_id']" position="replace">
-            <address class="mb-0">
+        <xpath expr="//div[@name='address_not_same_as_shipping']//address[@t-field='o.partner_id']" position="attributes">
+            <attribute name="t-if">not is_sicm</attribute>
+        </xpath>
+
+        <xpath expr="//div[@name='address_not_same_as_shipping']//address[@t-field='o.partner_id']" position="after">
+            <address class="mb-0" t-if="is_sicm">
                 <div t-field="o.partner_id.name"/>
                 <div t-if="o.partner_id.street" t-field="o.partner_id.street"/>
                 <div t-if="o.partner_id.street2" t-field="o.partner_id.street2"/>
@@ -30,8 +43,12 @@
             </address>
         </xpath>
 
-        <xpath expr="//div[@name='address_same_as_shipping']//address[@t-field='o.partner_id']" position="replace">
-            <address class="mb-0">
+        <xpath expr="//div[@name='address_same_as_shipping']//address[@t-field='o.partner_id']" position="attributes">
+            <attribute name="t-if">not is_sicm</attribute>
+        </xpath>
+
+        <xpath expr="//div[@name='address_same_as_shipping']//address[@t-field='o.partner_id']" position="after">
+            <address class="mb-0" t-if="is_sicm">
                 <div t-field="o.partner_id.name"/>
                 <div t-if="o.partner_id.street" t-field="o.partner_id.street"/>
                 <div t-if="o.partner_id.street2" t-field="o.partner_id.street2"/>
@@ -44,8 +61,12 @@
             </address>
         </xpath>
 
-        <xpath expr="//div[@name='no_shipping']//address[@t-field='o.partner_id']" position="replace">
-            <address class="mb-0">
+        <xpath expr="//div[@name='no_shipping']//address[@t-field='o.partner_id']" position="attributes">
+            <attribute name="t-if">not is_sicm</attribute>
+        </xpath>
+
+        <xpath expr="//div[@name='no_shipping']//address[@t-field='o.partner_id']" position="after">
+            <address class="mb-0" t-if="is_sicm">
                 <div t-field="o.partner_id.name"/>
                 <div t-if="o.partner_id.street" t-field="o.partner_id.street"/>
                 <div t-if="o.partner_id.street2" t-field="o.partner_id.street2"/>
@@ -57,6 +78,91 @@
                 <div t-if="o.partner_id.country_id" t-field="o.partner_id.country_id.name"/>
             </address>
         </xpath>
+
+        <xpath expr="//div[@name='delivery_date']" position="replace">
+            <div class="col" t-if="o.delivery_date" name="delivery_date">
+                <strong>Delivery Date</strong>
+                <div t-field="o.delivery_date">2023-09-25</div>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@name='operation_type']" position="attributes">
+            <attribute name="t-if">(has_service or has_consu) and (not is_sicm)</attribute>
+        </xpath>
+
+        <xpath expr="//t[@t-set='display_discount']" position="before">
+            <t t-set="display_reference" t-value="any(l.product_id.default_code for l in (o.invoice_line_ids or []))"/>
+        </xpath>
+
+        <xpath expr="//t[@t-set='display_discount']" position="before">
+            <t t-if="is_sicm" t-set="display_increase" t-value="any(l.increase for l in (o.invoice_line_ids or []))"/>
+        </xpath>
+
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_product_ref" t-if="display_reference" class="text-start">Reference</th>
+        </xpath>
+
+        <xpath expr="//th[@name='th_priceunit']" position="after">
+            <th name="th_increase" t-if="is_sicm and display_increase" class="text-end"><span>Increase%</span></th>
+        </xpath>
+
+        <xpath expr="//th[@name='th_discount']" position="after">
+            <th name="th_net_price" t-if="is_sicm and display_increase" class="text-end text-nowrap"><span>Net price</span></th>
+        </xpath>
+
+        <xpath expr="//th[@name='th_taxes']" position="attributes">
+            <attribute name="t-if">not is_sicm</attribute>
+        </xpath>
+
+        <xpath expr="//td[@name='account_invoice_line_name']" position="attributes">
+            <attribute name="t-if">not is_sicm</attribute>
+        </xpath>
+        <xpath expr="//td[@name='account_invoice_line_name']" position="replace">
+            <td name="account_invoice_line_ref" t-if="display_reference" t-att-class="padding_class">
+                <span t-field="line.product_id.default_code"/>
+            </td>
+            <td name="account_invoice_line_name" t-att-class="padding_class">
+                <t t-set="name_lines" t-value="(line.name or '').split('\n')"/>
+                <t t-set="first_line" t-value="name_lines[0] if name_lines else ''"/>
+
+                <t t-if="line.product_id.default_code">
+                    <t t-set="first_line" t-value="first_line.replace('[%s] ' % line.product_id.default_code, '')"/>
+                </t>
+
+                <div><span t-esc="first_line"/></div>
+
+                <t t-if="len(name_lines) &gt; 1">
+                    <div class="text-muted fst-italic" style="font-size: 90%;">
+                        <span t-esc="'\n'.join(name_lines[1:])" t-options="{'widget': 'text'}"/>
+                    </div>
+                </t>
+            </td>
+        </xpath>
+
+        <xpath expr="//td[@name='td_price_unit']" position="after">
+            <t t-if="is_sicm">
+                <td name="td_increase"
+                    t-if="is_sicm and display_increase"
+                    t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                    <span class="text-nowrap" t-field="line.increase" t-options="{'widget': 'float', 'precision': 2}">0</span>
+                </td>
+            </t>
+        </xpath>
+
+        <xpath expr="//td[@name='td_discount']" position="after">
+            <t t-if="is_sicm">
+                <td name="td_net_price"
+                    t-if="is_sicm and display_increase"
+                    t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                    <span t-if="not hide_prices" class="text-nowrap" t-field="line.net_price" t-options="{'widget': 'float', 'precision': 2}">9.00</span>
+                </td>
+            </t>
+        </xpath>    
+
+        <xpath expr="//td[@name='td_taxes']" position="attributes">
+            <attribute name="t-if">not is_sicm</attribute>
+        </xpath>
+
     </template>
 
 </odoo>
