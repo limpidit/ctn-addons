@@ -1,7 +1,7 @@
 {
-    'name': 'SICM Contacts',
+    'name': 'CTN Contacts',
     'version': '1.0',
-    'description': 'SICM Contacts',
+    'description': 'CTN Contacts',
     'author': 'Limpid IT',
     'license': 'LGPL-3',
     'depends': [
