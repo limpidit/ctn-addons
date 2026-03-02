@@ -10,7 +10,7 @@
                     <field name="csv_file" filename="file_name" widget="binary"/>
                 </group>
                 <footer>
-                    <button name="action_read_and_log_file" string="Lire le fichier" type="object" class="btn-primary"/>
+                    <button name="action_import_file" string="Lire le fichier" type="object" class="btn-primary"/>
                     <button string="Annuler" class="btn-secondary" special="cancel"/>
                 </footer>
             </form>
