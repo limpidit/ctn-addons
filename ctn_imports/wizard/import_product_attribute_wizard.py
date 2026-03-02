@@ -8,8 +8,8 @@ from odoo.exceptions import UserError
 _logger = logging.getLogger(__name__)
 
 
-class ProductAttributeImportWizard(models.TransientModel):
-    _name = 'product.attribute.import.wizard'
+class ImportProductAttributeWizard(models.TransientModel):
+    _name = 'import.product.attribute.wizard'
     _description = "Wizard d'import CSV pour les attributs"
 
     csv_file = fields.Binary(string="Fichier CSV", required=True)
