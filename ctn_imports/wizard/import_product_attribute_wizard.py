@@ -23,12 +23,17 @@ class ImportProductAttributeWizard(models.TransientModel):
 
         try:
             raw_file = base64.b64decode(self.csv_file)
+            decoded_file = None
             
-            try:
-                decoded_file = raw_file.decode('utf-8')
-            except UnicodeDecodeError:
-                _logger.warning("Échec du décodage UTF-8. Tentative avec cp1252.")
-                decoded_file = raw_file.decode('cp1252')
+            for enc in ['utf-8', 'cp1252', 'iso-8859-15', 'mac_roman']:
+                try:
+                    decoded_file = raw_file.decode(enc)
+                    break
+                except UnicodeDecodeError:
+                    continue
+            
+            if decoded_file is None:
+                decoded_file = raw_file.decode('utf-8', errors='replace')
             
             file_stream = StringIO(decoded_file)
             csv_reader = csv.reader(file_stream, delimiter=';') 

@@ -12,6 +12,7 @@
     ],
     'data': [
         'security/ir.model.access.csv',
+        'wizard/menuitems.xml',
         'wizard/import_product_attribute_wizard_views.xml',
     ],
     'auto_install': False,

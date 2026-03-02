@@ -24,9 +24,4 @@
         <field name="target">new</field> 
     </record>
 
-    <menuitem id="menu_product_attribute_import" 
-              name="Import Attributs CSV" 
-              parent="sale.product_menu_catalog" 
-              action="action_open_attribute_import_wizard" 
-              sequence="100"/>
 </odoo>
