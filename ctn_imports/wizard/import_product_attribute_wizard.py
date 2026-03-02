@@ -16,23 +16,31 @@ class ImportProductAttributeWizard(models.TransientModel):
     file_name = fields.Char(string="Nom du fichier")
 
     def action_read_and_log_file(self):
-        """ Décode le fichier CSV et affiche chaque ligne dans les logs """
         self.ensure_one()
         
         if not self.csv_file:
             raise UserError(_("Veuillez charger un fichier CSV."))
 
         try:
-            decoded_file = base64.b64decode(self.csv_file).decode('utf-8')            
+            raw_file = base64.b64decode(self.csv_file)
+            
+            try:
+                decoded_file = raw_file.decode('utf-8')
+            except UnicodeDecodeError:
+                _logger.warning("Échec du décodage UTF-8. Tentative avec cp1252.")
+                decoded_file = raw_file.decode('cp1252')
+            
             file_stream = StringIO(decoded_file)
-            csv_reader = csv.reader(file_stream, delimiter=',') 
+            csv_reader = csv.reader(file_stream, delimiter=';') 
+            
             _logger.info("=== DÉBUT DE LA LECTURE DU FICHIER CSV ===")
             
             headers = next(csv_reader, None)
             _logger.info("En-têtes du CSV : %s", headers)
 
             for row_index, row in enumerate(csv_reader, start=2):
-                _logger.info("Ligne %s : %s", row_index, row)
+                clean_row = [str(val).strip() for val in row]
+                _logger.info("Ligne %s : %s", row_index, clean_row)
 
             _logger.info("=== FIN DE LA LECTURE DU FICHIER CSV ===")
 
