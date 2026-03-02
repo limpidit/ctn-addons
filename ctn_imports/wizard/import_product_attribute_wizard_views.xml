@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_product_attribute_import_wizard_form" model="ir.ui.view">
+        <field name="name">product.attribute.import.wizard.form</field>
+        <field name="model">product.attribute.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Mise à jour des attributs via CSV">
+                <group>
+                    <field name="file_name" invisible="1"/>
+                    <field name="csv_file" filename="file_name" widget="binary"/>
+                </group>
+                <footer>
+                    <button name="action_read_and_log_file" string="Lire le fichier" type="object" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_open_attribute_import_wizard" model="ir.actions.act_window">
+        <field name="name">Importer / Mettre à jour les attributs</field>
+        <field name="res_model">product.attribute.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field> 
+    </record>
+
+    <menuitem id="menu_product_attribute_import" 
+              name="Import Attributs CSV" 
+              parent="sale.product_menu_catalog" 
+              action="action_open_attribute_import_wizard" 
+              sequence="100"/>
+</odoo>
