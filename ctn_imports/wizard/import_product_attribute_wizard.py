@@ -41,7 +41,7 @@ class ImportProductAttributeWizard(models.TransientModel):
             decoded_file = decoded_file.replace('\x00', '')
             
             file_stream = StringIO(decoded_file, newline='')
-            csv_reader = csv.reader(file_stream, delimiter=',') 
+            csv_reader = csv.reader(file_stream, delimiter=';') 
             
             _logger.info("=== DÉBUT DE L'IMPORT DES ATTRIBUTS ===")
             
