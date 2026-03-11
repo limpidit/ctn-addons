@@ -7,6 +7,9 @@
     'depends': [
         'contacts'
     ],
+    'data': [
+        'views/res_partner_views.xml',
+    ],
     'auto_install': False,
     'application': False
 }
