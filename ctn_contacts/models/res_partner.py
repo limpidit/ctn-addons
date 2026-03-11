@@ -1,10 +1,12 @@
 
-from odoo import models, api, _
+from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
 
 class ResPartner(models.Model):
     _inherit = "res.partner"
+
+    customer_ref = fields.Char(string="Customer ref")
 
     @api.constrains('category_id', 'is_company')
     def _check_category_required_for_group(self):
