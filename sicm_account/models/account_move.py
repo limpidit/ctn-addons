@@ -16,8 +16,8 @@ class AccountMove(models.Model):
         self.ensure_one()
         base_line = super()._prepare_product_base_line_for_taxes_computation(product_line)
 
-        if self.is_invoice(include_receipts=True):
-            base_line['price_unit'] = product_line.net_price or product_line.price_unit
+        if self.is_invoice(include_receipts=True) and self.is_sicm_company:
+            base_line['price_unit'] = product_line.net_price
             base_line['discount'] = 0.0
 
         return base_line
