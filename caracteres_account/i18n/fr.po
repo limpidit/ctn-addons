@@ -1,0 +1,104 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* caracteres_account
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e-20251021\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-18 16:12+0000\n"
+"PO-Revision-Date: 2026-03-18 16:12+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: caracteres_account
+#: model:ir.model.fields,field_description:caracteres_account.field_account_move_line__copies
+#: model_terms:ir.ui.view,arch_db:caracteres_account.report_invoice_document_inherit_caracteres
+msgid "Copies"
+msgstr "Exemplaires"
+
+#. module: caracteres_account
+#: model:ir.model.fields,field_description:caracteres_account.field_account_move__display_name
+#: model:ir.model.fields,field_description:caracteres_account.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:caracteres_account.field_sale_order_line__display_name
+msgid "Display Name"
+msgstr "Nom d'affichage"
+
+#. module: caracteres_account
+#: model:ir.model.fields,field_description:caracteres_account.field_account_move_line__height
+#: model_terms:ir.ui.view,arch_db:caracteres_account.report_invoice_document_inherit_caracteres
+msgid "Height"
+msgstr "Hauteur"
+
+#. module: caracteres_account
+#: model:ir.model.fields,field_description:caracteres_account.field_account_move__id
+#: model:ir.model.fields,field_description:caracteres_account.field_account_move_line__id
+#: model:ir.model.fields,field_description:caracteres_account.field_sale_order_line__id
+msgid "ID"
+msgstr ""
+
+#. module: caracteres_account
+#: model:ir.model.fields,field_description:caracteres_account.field_account_bank_statement_line__is_caracteres_company
+#: model:ir.model.fields,field_description:caracteres_account.field_account_move__is_caracteres_company
+#: model:ir.model.fields,field_description:caracteres_account.field_account_move_line__is_caracteres_company
+msgid "Is Caracteres Company"
+msgstr "Est la société Caractères"
+
+#. module: caracteres_account
+#: model:ir.model,name:caracteres_account.model_account_move
+msgid "Journal Entry"
+msgstr "Pièce comptable"
+
+#. module: caracteres_account
+#: model:ir.model,name:caracteres_account.model_account_move_line
+msgid "Journal Item"
+msgstr "Écriture comptable"
+
+#. module: caracteres_account
+#: model:ir.model.fields,field_description:caracteres_account.field_account_move_line__num_models
+#: model_terms:ir.ui.view,arch_db:caracteres_account.report_invoice_document_inherit_caracteres
+msgid "Models"
+msgstr "Modèles"
+
+#. module: caracteres_account
+#: model:ir.model.fields,field_description:caracteres_account.field_account_move_line__area
+#: model_terms:ir.ui.view,arch_db:caracteres_account.report_invoice_document_inherit_caracteres
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: caracteres_account
+#: model:ir.model.fields,field_description:caracteres_account.field_account_move_line__line_reference
+#: model_terms:ir.ui.view,arch_db:caracteres_account.report_invoice_document_inherit_caracteres
+msgid "Reference"
+msgstr "Référence"
+
+#. module: caracteres_account
+#: model:ir.model,name:caracteres_account.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Ligne de commande"
+
+#. module: caracteres_account
+#: model:ir.model.fields,help:caracteres_account.field_account_move_line__total_surface
+msgid ""
+"The optional quantity expressed by this line, eg: number of product sold. "
+"The quantity is not a legal requirement but is very useful for some reports."
+msgstr ""
+"La quantité optionnelle exprimée par cette ligne, ex : nombre de produits "
+"vendus. La quantité n'est pas une obligation légale mais est très utile pour"
+" certains rapports."
+
+#. module: caracteres_account
+#: model:ir.model.fields,field_description:caracteres_account.field_account_move_line__total_surface
+#: model_terms:ir.ui.view,arch_db:caracteres_account.report_invoice_document_inherit_caracteres
+msgid "Total Surface"
+msgstr "Surface totale"
+
+#. module: caracteres_account
+#: model:ir.model.fields,field_description:caracteres_account.field_account_move_line__width
+#: model_terms:ir.ui.view,arch_db:caracteres_account.report_invoice_document_inherit_caracteres
+msgid "Width"
+msgstr "Largeur"

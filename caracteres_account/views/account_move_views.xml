@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_move_form_caracteres_account" model="ir.ui.view">
+        <field name="name">account.move.form.caracteres.account</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Expose is_caracteres_company to the form so child list can access parent.is_caracteres_company -->
+            <xpath expr="//field[@name='invoice_line_ids']" position="before">
+                <field name="is_caracteres_company" invisible="1"/>
+            </xpath>
+
+            <!-- Hide standard quantity column for Caracteres (replaced by total_surface) -->
+            <xpath expr="//field[@name='invoice_line_ids']//list//field[@name='quantity']" position="attributes">
+                <attribute name="column_invisible">parent.is_caracteres_company</attribute>
+            </xpath>
+
+            <!-- Insert custom dimension columns before quantity, in required order:
+                 Reference > Width > Height > Copies > Models > Quantity (area) -->
+            <xpath expr="//field[@name='invoice_line_ids']//list//field[@name='quantity']" position="before">
+                <field name="line_reference" column_invisible="not parent.is_caracteres_company"/>
+                <field name="width" column_invisible="not parent.is_caracteres_company"/>
+                <field name="height" column_invisible="not parent.is_caracteres_company"/>
+                <field name="copies" column_invisible="not parent.is_caracteres_company"/>
+                <field name="num_models" column_invisible="not parent.is_caracteres_company"/>
+                <field name="area" column_invisible="not parent.is_caracteres_company" readonly="1"/>
+            </xpath>
+
+            <!-- Add Total Surface (= quantity) right after the hidden quantity -->
+            <xpath expr="//field[@name='invoice_line_ids']//list//field[@name='quantity']" position="after">
+                <field name="total_surface" column_invisible="not parent.is_caracteres_company"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_order_form_caracteres_sale" model="ir.ui.view">
+        <field name="name">sale.order.form.caracteres.sale</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Expose is_caracteres_company to the form so child list can access parent.is_caracteres_company -->
+            <xpath expr="//field[@name='order_line']" position="before">
+                <field name="is_caracteres_company" invisible="1"/>
+            </xpath>
+
+            <!-- Hide standard product_uom_qty column for Caracteres (replaced by total_surface) -->
+            <xpath expr="//field[@name='order_line']//list//field[@name='product_uom_qty']" position="attributes">
+                <attribute name="column_invisible">parent.is_caracteres_company</attribute>
+            </xpath>
+
+            <!-- Insert custom dimension columns before product_uom_qty, in required order:
+                 Reference > Width > Height > Copies > Models > Quantity (area) -->
+            <xpath expr="//field[@name='order_line']//list//field[@name='product_uom_qty']" position="before">
+                <field name="line_reference" column_invisible="not parent.is_caracteres_company"/>
+                <field name="width" column_invisible="not parent.is_caracteres_company"/>
+                <field name="height" column_invisible="not parent.is_caracteres_company"/>
+                <field name="copies" column_invisible="not parent.is_caracteres_company"/>
+                <field name="num_models" column_invisible="not parent.is_caracteres_company"/>
+                <field name="area" column_invisible="not parent.is_caracteres_company" readonly="1"/>
+            </xpath>
+
+            <!-- Add Total Surface (= product_uom_qty) right after the hidden product_uom_qty -->
+            <xpath expr="//field[@name='order_line']//list//field[@name='product_uom_qty']" position="after">
+                <field name="total_surface" column_invisible="not parent.is_caracteres_company"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
