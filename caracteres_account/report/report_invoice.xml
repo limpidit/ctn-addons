@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_invoice_document_inherit_caracteres" inherit_id="account.report_invoice_document">
+
+        <!-- Set is_caracteres flag based on current company -->
+        <xpath expr="//t[@t-set='o']" position="after">
+            <t t-set="is_caracteres" t-value="o.env.company == o.env.ref('caracteres_base.company_caracteres')"/>
+        </xpath>
+
+        <!-- Hide standard Qty column header for Caractères -->
+        <xpath expr="//th[@name='th_quantity']" position="attributes">
+            <attribute name="t-if">not is_caracteres</attribute>
+        </xpath>
+
+        <!-- Insert custom column headers before Unit Price -->
+        <xpath expr="//th[@name='th_priceunit']" position="before">
+            <t t-if="is_caracteres">
+                <th name="th_caracteres_reference" class="text-start">Reference</th>
+                <th name="th_caracteres_width" class="text-end">Width</th>
+                <th name="th_caracteres_height" class="text-end">Height</th>
+                <th name="th_caracteres_copies" class="text-end">Copies</th>
+                <th name="th_caracteres_models" class="text-end">Models</th>
+                <th name="th_caracteres_area" class="text-end">Quantity</th>
+                <th name="th_caracteres_surface" class="text-end">Total Surface</th>
+            </t>
+        </xpath>
+
+        <!-- Hide standard Qty data cell for Caractères -->
+        <xpath expr="//td[@name='td_quantity']" position="attributes">
+            <attribute name="t-if">not is_caracteres</attribute>
+        </xpath>
+
+        <!-- Insert custom data cells before Unit Price cell -->
+        <xpath expr="//td[@name='td_price_unit']" position="before">
+            <t t-if="is_caracteres">
+                <td class="text-start">
+                    <span t-field="line.line_reference"/>
+                </td>
+                <td class="text-end">
+                    <span t-field="line.width" t-options="{'widget': 'float', 'precision': 3}"/>
+                </td>
+                <td class="text-end">
+                    <span t-field="line.height" t-options="{'widget': 'float', 'precision': 3}"/>
+                </td>
+                <td class="text-end">
+                    <span t-field="line.copies"/>
+                </td>
+                <td class="text-end">
+                    <span t-field="line.num_models"/>
+                </td>
+                <td class="text-end">
+                    <span t-field="line.area" t-options="{'widget': 'float', 'precision': 2}"/>
+                </td>
+                <td class="text-end">
+                    <span t-field="line.total_surface" t-options="{'widget': 'float', 'precision': 2}"/>
+                </td>
+            </t>
+        </xpath>
+
+    </template>
+
+</odoo>
