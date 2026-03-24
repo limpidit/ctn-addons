@@ -134,6 +134,18 @@
         <xpath expr="//td[@name='td_product_taxes']" position="attributes">
             <attribute name="t-if">not is_sicm</attribute>
         </xpath>
-        
+
+        <!-- Correction du colspan des lignes de section pour SICM
+             Formule standard : 3 + discount + taxes
+             Formule SICM     : 3 + reference + discount + increase*2 (taxes masquées) -->
+        <xpath expr="//t[@t-set='section_name_colspan']" position="replace">
+            <t t-if="is_sicm"
+               t-set="section_name_colspan"
+               t-value="3 + (1 if display_reference else 0) + (1 if display_discount else 0) + (2 if display_increase else 0)"/>
+            <t t-else=""
+               t-set="section_name_colspan"
+               t-value="3 + (1 if display_discount else 0) + (1 if display_taxes else 0)"/>
+        </xpath>
+
     </template>
 </odoo>

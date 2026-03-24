@@ -163,6 +163,14 @@
             <attribute name="t-if">not is_sicm</attribute>
         </xpath>
 
+        <!-- Correction du colspan des lignes de section pour SICM :
+             On patch directement le td de la section pour que le montant
+             s'aligne toujours sous la colonne Montant.
+             Formule SICM : 3 + reference + discount + increase*2 (taxes masquées) -->
+        <xpath expr="//td[@name='line_name_td']" position="attributes">
+            <attribute name="t-att-colspan">1 if is_product else (3 + (1 if display_reference else 0) + (1 if display_discount else 0) + (2 if (is_sicm and display_increase) else 0)) if is_sicm else line_colspan</attribute>
+        </xpath>
+
     </template>
 
 </odoo>
