@@ -18,6 +18,12 @@
                        column_invisible="not parent.is_sicm_company or parent.picking_type_code == 'incoming'"/>
             </xpath>
 
+            <!-- Notes de la commande client (sous la liste des mouvements) -->
+            <xpath expr="//page[@name='operations']//field[@name='move_ids']" position="after">
+                <field name="sale_order_notes" string="Notes commande" readonly="1"
+                       invisible="not is_sicm_company or not sale_order_notes"/>
+            </xpath>
+
         </field>
     </record>
 

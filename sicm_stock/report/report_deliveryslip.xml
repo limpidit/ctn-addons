@@ -13,6 +13,30 @@
             <td><em t-if="move.sale_line_description"><t t-out="move.sale_line_description"/></em></td>
         </xpath>
 
+        <!-- Notes commande après le tableau (état non terminé) -->
+        <xpath expr="//table[@name='stock_move_table']" position="after">
+            <t t-if="o.state != 'done' and o.sale_id and o.env.company == o.env.ref('sicm_base.company_sicm')">
+                <t t-set="sale_notes" t-value="o.sale_id.order_line.sorted('sequence').filtered(lambda l: l.display_type == 'line_note' and l.name)"/>
+                <div t-if="sale_notes" class="mt-3">
+                    <t t-foreach="sale_notes" t-as="note_line">
+                        <p class="fst-italic mb-1" t-out="note_line.name"/>
+                    </t>
+                </div>
+            </t>
+        </xpath>
+
+        <!-- Notes commande après le tableau (état terminé) -->
+        <xpath expr="//table[@name='stock_move_line_table']" position="after">
+            <t t-if="o.move_line_ids and o.state == 'done' and o.sale_id and o.env.company == o.env.ref('sicm_base.company_sicm')">
+                <t t-set="sale_notes" t-value="o.sale_id.order_line.sorted('sequence').filtered(lambda l: l.display_type == 'line_note' and l.name)"/>
+                <div t-if="sale_notes" class="mt-3">
+                    <t t-foreach="sale_notes" t-as="note_line">
+                        <p class="fst-italic mb-1" t-out="note_line.name"/>
+                    </t>
+                </div>
+            </t>
+        </xpath>
+
     </template>
 
     <!-- Lignes avec numéros de série (état done) -->
