@@ -32,7 +32,7 @@
                 <th name="th_supplier_code" class="text-start">
                     <strong>Supplier Reference</strong>
                 </th>
-                <th name="th_description" class="text-start">
+                <th name="th_description" class="text-start" t-if="any(m.sale_line_description for m in o.move_ids)">
                     <strong>Description</strong>
                 </th>
             </t>
@@ -99,7 +99,7 @@
                     <span t-if="seller" t-out="seller.product_code"/>
                 </td>
 
-                <td class="text-start">
+                <td class="text-start" t-if="any(m.sale_line_description for m in o.move_ids)">
                     <em t-if="move.sale_line_description">
                         <t t-out="move.sale_line_description"/>
                     </em>
