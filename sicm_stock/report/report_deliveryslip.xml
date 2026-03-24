@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- Table stock_move_table (état != done) -->
+    <!-- Table stock_move_table (état != done)
+         ctn_stock remplace span[@t-field='move.product_id'] par span[@t-esc='move.product_id.name or ""]
+         On cible la td produit via ce span et on ajoute la description à l'intérieur -->
     <template id="report_delivery_document_sicm" inherit_id="stock.report_delivery_document">
-        <xpath expr="//table[@name='stock_move_table']//p[span[@t-out='move.description_picking']]" position="after">
+        <xpath expr="//table[@name='stock_move_table']//td[span[contains(@t-esc,'product_id.name')]]" position="inside">
             <t t-if="o.env.company == o.env.ref('sicm_base.company_sicm') and move.sale_line_description">
                 <p style="margin: 0; font-style: italic; color: #666;">
                     <small><t t-out="move.sale_line_description"/></small>
@@ -12,9 +14,10 @@
         </xpath>
     </template>
 
-    <!-- Lignes avec numéros de série (état done) -->
+    <!-- Lignes avec numéros de série (état done)
+         On cible la td produit via span[@t-field='move_line.product_id'] -->
     <template id="stock_report_delivery_has_serial_move_line_sicm" inherit_id="stock.stock_report_delivery_has_serial_move_line">
-        <xpath expr="//p[span[@t-out='description']]" position="after">
+        <xpath expr="//td[span[@t-field='move_line.product_id']]" position="inside">
             <t t-if="o.env.company == o.env.ref('sicm_base.company_sicm') and move_line.move_id.sale_line_description">
                 <p style="margin: 0; font-style: italic; color: #666;">
                     <small><t t-out="move_line.move_id.sale_line_description"/></small>
@@ -23,9 +26,10 @@
         </xpath>
     </template>
 
-    <!-- Lignes agrégées (état done, sans numéros de série) -->
+    <!-- Lignes agrégées (état done, sans numéros de série)
+         On cible la td qui contient le nom de la ligne agrégée -->
     <template id="stock_report_delivery_aggregated_move_lines_sicm" inherit_id="stock.stock_report_delivery_aggregated_move_lines">
-        <xpath expr="//p[contains(@t-if, 'description')]" position="after">
+        <xpath expr="//td[span[contains(@t-out,'aggregated_lines') and contains(@t-out,'name')]]" position="inside">
             <t t-if="o.env.company == o.env.ref('sicm_base.company_sicm')">
                 <t t-set="agg_sale_desc" t-value="o.move_line_ids.filtered(lambda ml: ml.product_id == aggregated_lines[line]['product_id'] and ml.move_id.sale_line_description)[:1].move_id.sale_line_description"/>
                 <p t-if="agg_sale_desc" style="margin: 0; font-style: italic; color: #666;">
