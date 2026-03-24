@@ -34,3 +34,8 @@ class SaleOrder(models.Model):
             default.setdefault("client_order_ref", self.client_order_ref or "")
 
         return super().copy(default)
+
+    def _prepare_delivery_line_vals(self, carrier, price_unit):
+        vals = super()._prepare_delivery_line_vals(carrier, price_unit)
+        vals['price_unit'] = round(vals['price_unit'], 2)
+        return vals

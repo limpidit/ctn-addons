@@ -163,6 +163,11 @@
             <attribute name="t-if">not is_sicm</attribute>
         </xpath>
 
+        <!-- Correction colspan des lignes section pour SICM (colonnes supplémentaires Reference, Increase%, Net price) -->
+        <xpath expr="//t[@t-set='line_colspan' and contains(@t-value, 'not line.tax_ids')]" position="after">
+            <t t-if="is_sicm" t-set="line_colspan" t-value="3 + (1 if display_discount else 0) + (1 if display_reference else 0) + (2 if display_increase else 0)"/>
+        </xpath>
+
     </template>
 
 </odoo>
