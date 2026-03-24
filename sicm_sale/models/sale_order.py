@@ -26,6 +26,11 @@ class SaleOrder(models.Model):
             if (order.company_id and order.company_id.is_sicm_company() and order.partner_id.order_reference_required and not order.client_order_ref):
                 raise ValidationError(_("You must set a Customer Reference."))
 
+    def _prepare_delivery_line_vals(self, carrier, price_unit):
+        vals = super()._prepare_delivery_line_vals(carrier, price_unit)
+        vals['price_unit'] = round(vals['price_unit'], 2)
+        return vals
+
     def copy(self, default=None):
         self.ensure_one()
         default = dict(default or {})
