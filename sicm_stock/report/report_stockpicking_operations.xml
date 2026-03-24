@@ -32,6 +32,9 @@
                 <th name="th_supplier_code" class="text-start">
                     <strong>Supplier Reference</strong>
                 </th>
+                <th name="th_description" class="text-start">
+                    <strong>Description</strong>
+                </th>
             </t>
             <t t-else="">
                 <th name="th_product" class="text-start">
@@ -88,16 +91,18 @@
             <t t-if="o.env.company == o.env.ref('sicm_base.company_sicm')">
                 <td class="text-start">
                     <span t-field="move.product_id.default_code"/>
-                    <br t-if="move.sale_line_description"/>
-                    <small t-if="move.sale_line_description" style="font-style: italic; color: #666;">
-                        <t t-out="move.sale_line_description"/>
-                    </small>
                 </td>
 
                 <td class="text-start">
                     <t t-set="vendor" t-value="(o.partner_id.commercial_partner_id if o.picking_type_id.code == 'incoming' else False)"/>
                     <t t-set="seller" t-value="(move.product_id.seller_ids.filtered(lambda s: vendor and s.partner_id == vendor)[:1] or move.product_id.seller_ids[:1])"/>
                     <span t-if="seller" t-out="seller.product_code"/>
+                </td>
+
+                <td class="text-start">
+                    <em t-if="move.sale_line_description">
+                        <t t-out="move.sale_line_description"/>
+                    </em>
                 </td>
             </t>
             <t t-else="">
