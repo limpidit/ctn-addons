@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_picking_form_inherit_sale_description" model="ir.ui.view">
+        <field name="name">stock.picking.form.sale.description</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Champ is_sicm_company au niveau du picking (parent) pour le column_invisible -->
+            <xpath expr="//sheet" position="inside">
+                <field name="is_sicm_company" invisible="1"/>
+            </xpath>
+
+            <!-- Colonne description visible uniquement pour la société SICM, hors réceptions -->
+            <xpath expr="//page[@name='operations']//field[@name='move_ids']//list//field[@name='product_id']" position="after">
+                <field name="sale_line_description" string="Description" optional="show"
+                       column_invisible="not parent.is_sicm_company or parent.picking_type_code == 'incoming'"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

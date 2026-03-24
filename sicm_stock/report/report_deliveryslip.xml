@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Table stock_move_table (état != done) -->
+    <template id="report_delivery_document_sicm" inherit_id="stock.report_delivery_document">
+        <xpath expr="//table[@name='stock_move_table']//p[span[@t-out='move.description_picking']]" position="after">
+            <t t-if="o.env.company == o.env.ref('sicm_base.company_sicm') and move.sale_line_description">
+                <p style="margin: 0; font-style: italic; color: #666;">
+                    <small><t t-out="move.sale_line_description"/></small>
+                </p>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- Lignes avec numéros de série (état done) -->
+    <template id="stock_report_delivery_has_serial_move_line_sicm" inherit_id="stock.stock_report_delivery_has_serial_move_line">
+        <xpath expr="//p[span[@t-out='description']]" position="after">
+            <t t-if="o.env.company == o.env.ref('sicm_base.company_sicm') and move_line.move_id.sale_line_description">
+                <p style="margin: 0; font-style: italic; color: #666;">
+                    <small><t t-out="move_line.move_id.sale_line_description"/></small>
+                </p>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- Lignes agrégées (état done, sans numéros de série) -->
+    <template id="stock_report_delivery_aggregated_move_lines_sicm" inherit_id="stock.stock_report_delivery_aggregated_move_lines">
+        <xpath expr="//p[contains(@t-if, 'description')]" position="after">
+            <t t-if="o.env.company == o.env.ref('sicm_base.company_sicm')">
+                <t t-set="agg_sale_desc" t-value="o.move_line_ids.filtered(lambda ml: ml.product_id == aggregated_lines[line]['product_id'] and ml.move_id.sale_line_description)[:1].move_id.sale_line_description"/>
+                <p t-if="agg_sale_desc" style="margin: 0; font-style: italic; color: #666;">
+                    <small><t t-out="agg_sale_desc"/></small>
+                </p>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>

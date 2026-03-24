@@ -88,6 +88,10 @@
             <t t-if="o.env.company == o.env.ref('sicm_base.company_sicm')">
                 <td class="text-start">
                     <span t-field="move.product_id.default_code"/>
+                    <br t-if="move.sale_line_description"/>
+                    <small t-if="move.sale_line_description" style="font-style: italic; color: #666;">
+                        <t t-out="move.sale_line_description"/>
+                    </small>
                 </td>
 
                 <td class="text-start">
