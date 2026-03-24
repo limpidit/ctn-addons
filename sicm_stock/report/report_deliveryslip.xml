@@ -31,7 +31,7 @@
     <template id="stock_report_delivery_aggregated_move_lines_sicm" inherit_id="stock.stock_report_delivery_aggregated_move_lines">
         <xpath expr="//td[span[contains(@t-out,'aggregated_lines') and contains(@t-out,'name')]]" position="inside">
             <t t-if="o.env.company == o.env.ref('sicm_base.company_sicm')">
-                <t t-set="agg_sale_desc" t-value="o.move_line_ids.filtered(lambda ml: ml.product_id == aggregated_lines[line]['product_id'] and ml.move_id.sale_line_description)[:1].move_id.sale_line_description"/>
+                <t t-set="agg_sale_desc" t-value="o.move_line_ids.filtered(lambda ml: aggregated_lines[line].get('product_id') and ml.product_id == aggregated_lines[line].get('product_id') and ml.move_id.sale_line_description)[:1].move_id.sale_line_description"/>
                 <p t-if="agg_sale_desc" style="margin: 0; font-style: italic; color: #666;">
                     <small><t t-out="agg_sale_desc"/></small>
                 </p>
