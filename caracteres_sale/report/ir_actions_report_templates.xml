@@ -3,9 +3,24 @@
 
     <template id="report_saleorder_document_inherit_caracteres" inherit_id="sale.report_saleorder_document">
 
-        <!-- Set is_caracteres flag based on current company -->
+        <!-- Set is_caracteres flag and column visibility flags -->
         <xpath expr="//t[@t-set='doc']" position="after">
             <t t-set="is_caracteres" t-value="doc.env.company == doc.env.ref('caracteres_base.company_caracteres')"/>
+            <t t-set="show_reference" t-value="is_caracteres and any(l.line_reference for l in doc.order_line)"/>
+            <t t-set="show_width"     t-value="is_caracteres and any(l.width for l in doc.order_line)"/>
+            <t t-set="show_height"    t-value="is_caracteres and any(l.height for l in doc.order_line)"/>
+            <t t-set="show_copies"    t-value="is_caracteres and any(l.copies for l in doc.order_line)"/>
+            <t t-set="show_models"    t-value="is_caracteres and any(l.num_models for l in doc.order_line)"/>
+        </xpath>
+
+        <!-- Hide TVA column header for Caractères -->
+        <xpath expr="//th[@name='th_taxes']" position="attributes">
+            <attribute name="t-if">display_taxes and not is_caracteres</attribute>
+        </xpath>
+
+        <!-- Hide TVA data cell for Caractères -->
+        <xpath expr="//td[@name='td_product_taxes']" position="attributes">
+            <attribute name="t-if">display_taxes and not is_caracteres</attribute>
         </xpath>
 
         <!-- Hide standard Qty column header for Caractères -->
@@ -13,16 +28,21 @@
             <attribute name="t-if">not is_caracteres</attribute>
         </xpath>
 
+        <!-- Hide standard Unit Price column header for Caractères -->
+        <xpath expr="//th[@name='th_priceunit']" position="attributes">
+            <attribute name="t-if">not is_caracteres</attribute>
+        </xpath>
+
         <!-- Insert custom column headers before Unit Price -->
         <xpath expr="//th[@name='th_priceunit']" position="before">
             <t t-if="is_caracteres">
-                <th name="th_caracteres_reference" class="text-start">Reference</th>
-                <th name="th_caracteres_width" class="text-end">Width</th>
-                <th name="th_caracteres_height" class="text-end">Height</th>
-                <th name="th_caracteres_copies" class="text-end">Copies</th>
-                <th name="th_caracteres_models" class="text-end">Models</th>
-                <th name="th_caracteres_area" class="text-end">Quantity</th>
-                <th name="th_caracteres_surface" class="text-end">Total Surface</th>
+                <th t-if="show_reference" name="th_caracteres_reference" class="text-start">Ref.</th>
+                <th t-if="show_width"     name="th_caracteres_width"     class="text-end">Larg.</th>
+                <th t-if="show_height"    name="th_caracteres_height"    class="text-end">Haut.</th>
+                <th t-if="show_copies"    name="th_caracteres_copies"    class="text-end">Ex.</th>
+                <th t-if="show_models"    name="th_caracteres_models"    class="text-end">Mod.</th>
+                <th t-if="show_copies or show_models" name="th_caracteres_total" class="text-end">Total</th>
+                <th name="th_caracteres_priceunit" class="text-end">Px unitaire</th>
             </t>
         </xpath>
 
@@ -31,29 +51,34 @@
             <attribute name="t-if">not is_caracteres</attribute>
         </xpath>
 
+        <!-- Hide standard Unit Price data cell for Caractères -->
+        <xpath expr="//td[@name='td_product_priceunit']" position="attributes">
+            <attribute name="t-if">not is_caracteres</attribute>
+        </xpath>
+
         <!-- Insert custom data cells before Unit Price cell -->
         <xpath expr="//td[@name='td_product_priceunit']" position="before">
             <t t-if="is_caracteres">
-                <td class="text-start">
+                <td t-if="show_reference" class="text-start">
                     <span t-field="line.line_reference"/>
                 </td>
-                <td class="text-end">
+                <td t-if="show_width" class="text-end">
                     <span t-field="line.width" t-options="{'widget': 'float', 'precision': 3}"/>
                 </td>
-                <td class="text-end">
+                <td t-if="show_height" class="text-end">
                     <span t-field="line.height" t-options="{'widget': 'float', 'precision': 3}"/>
                 </td>
-                <td class="text-end">
+                <td t-if="show_copies" class="text-end">
                     <span t-field="line.copies"/>
                 </td>
-                <td class="text-end">
+                <td t-if="show_models" class="text-end">
                     <span t-field="line.num_models"/>
                 </td>
-                <td class="text-end">
-                    <span t-field="line.area" t-options="{'widget': 'float', 'precision': 2}"/>
+                <td t-if="show_copies or show_models" class="text-end">
+                    <span t-out="line.copies * line.num_models"/>
                 </td>
                 <td class="text-end">
-                    <span t-field="line.total_surface" t-options="{'widget': 'float', 'precision': 2}"/>
+                    <span t-out="line.price_unit * line.area" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
                 </td>
             </t>
         </xpath>
