@@ -32,6 +32,9 @@
                 <th name="th_supplier_code" class="text-start">
                     <strong>Supplier Reference</strong>
                 </th>
+                <th name="th_description" class="text-start" t-if="any(m.sale_line_description for m in o.move_ids)">
+                    <strong>Description</strong>
+                </th>
             </t>
             <t t-else="">
                 <th name="th_product" class="text-start">
@@ -95,6 +98,12 @@
                     <t t-set="seller" t-value="(move.product_id.seller_ids.filtered(lambda s: vendor and s.partner_id == vendor)[:1] or move.product_id.seller_ids[:1])"/>
                     <span t-if="seller" t-out="seller.product_code"/>
                 </td>
+
+                <td class="text-start" t-if="any(m.sale_line_description for m in o.move_ids)">
+                    <em t-if="move.sale_line_description">
+                        <t t-out="move.sale_line_description"/>
+                    </em>
+                </td>
             </t>
             <t t-else="">
                 <td class="text-start">
@@ -108,6 +117,18 @@
         </xpath>
 
         
+        <!-- Notes commande après la table des mouvements -->
+        <xpath expr="//table[contains(@class,'o_main_table')]" position="after">
+            <t t-if="o.env.company == o.env.ref('sicm_base.company_sicm') and o.sale_id">
+                <t t-set="sale_notes" t-value="o.sale_id.order_line.sorted('sequence').filtered(lambda l: l.display_type == 'line_note' and l.name)"/>
+                <div t-if="sale_notes" class="mt-3">
+                    <t t-foreach="sale_notes" t-as="note_line">
+                        <p class="fst-italic mb-1" t-out="note_line.name"/>
+                    </t>
+                </div>
+            </t>
+        </xpath>
+
         <xpath expr="//t[contains(@t-foreach, 'move_lines_without_entire_pack') and @t-as='line']" position="replace">
             <t t-if="o.env.company != o.env.ref('sicm_base.company_sicm')">
                 <t t-foreach="move_lines_without_entire_pack.sorted(key=lambda ml: (ml.location_id.complete_name, ml.location_dest_id.complete_name))" t-as="line" t-if="move_has_multiple_lines">
