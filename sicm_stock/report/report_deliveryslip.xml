@@ -8,6 +8,11 @@
             <th name="th_sm_description" t-if="any(m.sale_line_description for m in o.move_ids)"><strong>Description</strong></th>
         </xpath>
 
+        <!-- En-tête colonne Description dans stock_move_line_table (état done) -->
+        <xpath expr="//table[@name='stock_move_line_table']//th[@name='th_sml_product']" position="after">
+            <th name="th_sml_description" t-if="any(m.sale_line_description for m in o.move_ids)"><strong>Description</strong></th>
+        </xpath>
+
         <!-- Cellule Description pour chaque ligne (avant la quantité commandée) — masquée si aucune ligne n'a de description -->
         <xpath expr="//table[@name='stock_move_table']//td[span[@t-out='format_number(move.product_uom_qty)']]" position="before">
             <td t-if="any(m.sale_line_description for m in o.move_ids)"><em t-if="move.sale_line_description"><t t-out="move.sale_line_description"/></em></td>
@@ -50,7 +55,7 @@
     <template id="stock_report_delivery_aggregated_move_lines_sicm" inherit_id="stock.stock_report_delivery_aggregated_move_lines">
         <xpath expr="//td[span[contains(@t-out,'aggregated_lines') and contains(@t-out,'name')]]" position="after">
             <t t-if="any(m.sale_line_description for m in o.move_ids)">
-                <t t-set="agg_sale_desc" t-value="o.move_line_ids.filtered(lambda ml: aggregated_lines[line].get('product_id') and ml.product_id == aggregated_lines[line].get('product_id') and ml.move_id.sale_line_description)[:1].move_id.sale_line_description"/>
+                <t t-set="agg_sale_desc" t-value="o.move_line_ids.filtered(lambda ml: aggregated_lines[line].get('product') and ml.product_id == aggregated_lines[line].get('product') and ml.move_id.sale_line_description)[:1].move_id.sale_line_description"/>
                 <td><em t-if="agg_sale_desc"><t t-out="agg_sale_desc"/></em></td>
             </t>
         </xpath>

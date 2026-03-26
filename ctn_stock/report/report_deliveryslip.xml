@@ -19,4 +19,35 @@
 
     </template>
 
+    <!-- Etat done : en-tête Reference dans stock_move_line_table -->
+    <template id="report_delivery_document_ctn_done_header" inherit_id="stock.report_delivery_document">
+        <xpath expr="//table[@name='stock_move_line_table']/thead/tr/th[@name='th_sml_product']" position="before">
+            <th name="th_sml_ref"><strong>Reference</strong></th>
+        </xpath>
+    </template>
+
+    <!-- Etat done : colonne Reference sur les lignes avec numéros de série + affichage nom sans default_code -->
+    <template id="stock_report_delivery_has_serial_move_line_ctn" inherit_id="stock.stock_report_delivery_has_serial_move_line">
+        <xpath expr="//td[span[@t-field='move_line.product_id']]" position="before">
+            <td class="w-auto text-nowrap">
+                <span t-esc="move_line.product_id.default_code or ''"/>
+            </td>
+        </xpath>
+        <xpath expr="//span[@t-field='move_line.product_id']" position="replace">
+            <span t-esc="move_line.product_id.name or ''"/>
+        </xpath>
+    </template>
+
+    <!-- Etat done : colonne Reference sur les lignes agrégées + affichage nom sans default_code -->
+    <template id="stock_report_delivery_aggregated_move_lines_ctn" inherit_id="stock.stock_report_delivery_aggregated_move_lines">
+        <xpath expr="//td[span[contains(@t-out,'aggregated_lines') and contains(@t-out,'name')]]" position="before">
+            <td class="w-auto text-nowrap">
+                <span t-out="aggregated_lines[line].get('product') and aggregated_lines[line]['product'].default_code or ''"/>
+            </td>
+        </xpath>
+        <xpath expr="//td//span[contains(@t-out,&quot;aggregated_lines[line]['name']&quot;)]" position="replace">
+            <span t-out="aggregated_lines[line].get('product') and aggregated_lines[line]['product'].name or aggregated_lines[line]['name']"/>
+        </xpath>
+    </template>
+
 </odoo>
